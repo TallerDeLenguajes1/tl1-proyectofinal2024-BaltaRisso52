@@ -13,55 +13,55 @@ namespace Protagonista
         private int salud;
         private int experiencia;
 
-        public string Nombre { get => nombre; }
-        public DateTime Fechanac { get => fechanac;}
-        public int Edad { get => edad;}
-        public int Velocidad { get => velocidad;}
-        public int Destreza { get => destreza;}
-        public int Fuerza { get => fuerza;}
-        public int Nivel { get => nivel;}
-        public int Armadura { get => armadura;}
-        public int Salud { get => salud;}
-        public int Experiencia { get => experiencia;}
+        public string Nombre { get => nombre; set => nombre = value; }
+        public DateTime Fechanac { get => fechanac; set => fechanac = value; }
+        public int Edad { get => edad; set => edad = value; }
+        public int Velocidad { get => velocidad; set => velocidad = value; }
+        public int Destreza { get => destreza; set => destreza = value; }
+        public int Fuerza { get => fuerza; set => fuerza = value; }
+        public int Nivel { get => nivel; set => nivel = value; }
+        public int Armadura { get => armadura; set => armadura = value; }
+        public int Salud { get => salud; set => salud = value; }
+        public int Experiencia { get => experiencia; set => experiencia = value; }
 
         public Personaje(string Nombre)
         {
-            this.nombre = Nombre;
+            this.Nombre = Nombre;
             Random random = new Random();
-            edad = random.Next(18,31);
+            Edad = random.Next(18,31);
             DateTime hoy = DateTime.Today; // obtener la fecha actual
-            int anioNac = hoy.Year - edad; // anio de nacimiento
+            int anioNac = hoy.Year - Edad; // anio de nacimiento
             int dia = random.Next(1,366); // numero aleatorio para el dia de nacimiento
-            fechanac = new DateTime(anioNac, 1, 1).AddDays(dia - 1); 
+            Fechanac = new DateTime(anioNac, 1, 1).AddDays(dia - 1); 
 
-            velocidad = 2;
-            destreza = 1;
-            fuerza = 2;
-            nivel = 1;
-            armadura = 1;
-            salud = 100;  
-            experiencia = 0;
+            Velocidad = 2;
+            Destreza = 1;
+            Fuerza = 2;
+            Nivel = 1;
+            Armadura = 1;
+            Salud = 100;  
+            Experiencia = 0;
         }
 
-        private void GanarExp(int ExpGanada){
-            experiencia += ExpGanada;
+        public void GanarExp(int ExpGanada){
+            Experiencia += ExpGanada;
 
-            int ExpParaSigNivel = nivel * 100;
+            int ExpParaSigNivel = Nivel * 100;
 
-            if (experiencia >= ExpParaSigNivel)
+            if (Experiencia >= ExpParaSigNivel)
             {
-                nivel++;
-                experiencia -= ExpParaSigNivel;
-                Console.WriteLine($"***HAS ALCANZADO EL NIVEL >{nivel}<***");
+                Nivel++;
+                Experiencia -= ExpParaSigNivel;
+                Console.WriteLine($"***HAS ALCANZADO EL NIVEL >{Nivel}<***");
             }
         }
 
         public void Entrenar(){
             Random random = new Random();
-            velocidad += random.Next(1,4);
-            destreza += random.Next(1,4);
-            fuerza += random.Next(1,4);
-            armadura += random.Next(1,4);
+            Velocidad += random.Next(1,4);
+            Destreza += random.Next(1,4);
+            Fuerza += random.Next(1,4);
+            Armadura += random.Next(1,4);
             GanarExp(10);
         }
 
@@ -69,13 +69,13 @@ namespace Protagonista
 
         public void MostrarCaracteristicas(){
             Console.WriteLine("**CARACTERISTICAS**");
-            Console.WriteLine($"Salud: {salud}");
-            Console.WriteLine($"Nivel: {nivel}");
-            Console.WriteLine($"Exp: {experiencia}");
-            Console.WriteLine($"Fuerza: {fuerza}");
-            Console.WriteLine($"Velocidad: {velocidad}");
-            Console.WriteLine($"Destreza: {destreza}");
-            Console.WriteLine($"Armadura: {armadura}");
+            Console.WriteLine($"Salud: {Salud}");
+            Console.WriteLine($"Nivel: {Nivel}");
+            Console.WriteLine($"Exp: {Experiencia}");
+            Console.WriteLine($"Fuerza: {Fuerza}");
+            Console.WriteLine($"Velocidad: {Velocidad}");
+            Console.WriteLine($"Destreza: {Destreza}");
+            Console.WriteLine($"Armadura: {Armadura}");
             
         }
 
