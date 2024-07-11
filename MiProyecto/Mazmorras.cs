@@ -28,6 +28,10 @@ namespace Mazmorras
                 {
                     return false;
                 }
+                Console.WriteLine($"Salud luego del combate: {personaje.Salud}");
+                Console.WriteLine("Presione una tecla para el siguiente combate...");
+                Console.ReadKey();
+                Console.Clear();
 
             }
             Console.WriteLine("SALUD AL 100% POR LLEGAR A LA SALA DEL JEFE");

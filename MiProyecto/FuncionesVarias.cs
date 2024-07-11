@@ -74,6 +74,23 @@ namespace Funciones
 
     }
 
+    public static Personaje CrearPersonaje()
+    {
+        Console.Write("Antes de comenzar, por favor ingresa el nombre de tu personaje: ");
+        string nombre = Console.ReadLine();
+
+        Personaje jugador = new Personaje(nombre);
+
+        Console.WriteLine($"¡Bienvenido, {nombre}! Tus estadísticas iniciales son:");
+        jugador.MostrarCaracteristicas();
+
+        return jugador;
+    }
+
+    public static void Menu(){
+      Console.WriteLine("");
+    }
+
     public static void EfectoCombatePersonaje(Personaje jugador, Monstruo monstruo, int danioJugador)
     {
       Thread.Sleep(300);

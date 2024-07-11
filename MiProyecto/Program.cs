@@ -4,36 +4,46 @@ using Monstruos;
 using Mazmorras;
 using Funciones;
 
+// MOSTRAR LA INTRODUCCION DEJ JUEGO
+FuncionesVarias.MostrarIntro();
 
-// FuncionesVarias.MostrarIntro();
 
-string nombre = Console.ReadLine();
-Personaje protagonista = new Personaje(nombre);
-Monstruo globin = new Monstruo(Tipos.Goblin);
-Monstruo globin1 = new Monstruo(Tipos.Goblin);
-Monstruo lobo = new Monstruo(Tipos.Lobo);
-List<Monstruo> monstruos = new List<Monstruo>();
-monstruos.Add(globin);
-monstruos.Add(globin1);
-Mazmorra prueba = new Mazmorra("balta", monstruos, lobo);
-protagonista.Entrenar();
-protagonista.Entrenar();
-protagonista.Entrenar();
-protagonista.Entrenar();
-bool probando = prueba.IniciarMazmorra(protagonista);
-if (probando)
+bool salir = false;
+while (!salir)
 {
-    Console.WriteLine("Mazmorra superada");
+    Console.WriteLine("╔════════════════════════════════════════════╗");
+    Console.WriteLine("║--------------------MENU--------------------║");
+    Console.WriteLine("╠════════════════════════════════════════════╣");
+    Console.WriteLine("║ 1. Nueva Partida                           ║");
+    Console.WriteLine("║ 2. Cargar Partida                          ║");
+    Console.WriteLine("║ 3. Salir                                   ║");
+    Console.WriteLine("╚════════════════════════════════════════════╝");
+    Console.Write("Ingrese su respuesta: ");
+    string respuesta = Console.ReadLine();
 
-}
-else
-{
-    Console.WriteLine("Mazmorra NO superada");
+    switch (respuesta)
+    {
+        case "1":
+            // CREAR EL PERSONAJE DEL JUGADOR
+            Personaje protagonista = FuncionesVarias.CrearPersonaje();
+
+            break;
+
+        case "2":
+            break;
+
+        case "3":
+            Console.WriteLine("Gracias por jugar. ¡Hasta la próxima!");
+            salir = true;
+            break;
+
+        default:
+            Console.WriteLine("Opción no válida. Por favor, selecciona una opción del 1 al 3.");
+            break;
+
+    }
 }
 
-protagonista.MostrarCaracteristicas();
-globin.MostrarCaracteristicas();
-Console.ReadKey();
 
 
 
