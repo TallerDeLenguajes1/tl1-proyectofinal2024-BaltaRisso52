@@ -2,19 +2,10 @@
 using Protagonista;
 using Monstruos;
 using Mazmorras;
-string texto = @"   ___  _                                   _      _             
-  / __\(_)  ___  _ __  __   __  ___  _ __  (_)  __| |  ___   ___ 
- /__\//| | / _ \| '_ \ \ \ / / / _ \| '_ \ | | / _` | / _ \ / __|
-/ \/  \| ||  __/| | | | \ V / |  __/| | | || || (_| || (_) |\__ \
-\_____/|_| \___||_| |_|  \_/   \___||_| |_||_| \__,_| \___/ |___/
-Ingrese el nombre de su personaje:";
+using Funciones;
 
-foreach (var item in texto)
-{
-    Console.Write(item);
-    Thread.Sleep(1);
-}
-// Console.WriteLine();
+
+FuncionesVarias.MostrarIntro();
 
 string nombre = Console.ReadLine();
 Personaje protagonista = new Personaje(nombre);
@@ -42,6 +33,7 @@ else
 
 protagonista.MostrarCaracteristicas();
 globin.MostrarCaracteristicas();
+Console.ReadKey();
 
 
 

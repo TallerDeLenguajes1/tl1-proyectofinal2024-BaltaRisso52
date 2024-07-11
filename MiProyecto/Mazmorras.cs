@@ -1,5 +1,6 @@
 using Monstruos;
 using Protagonista;
+using Funciones;
 namespace Mazmorras
 {
     public class Mazmorra
@@ -22,19 +23,20 @@ namespace Mazmorras
             Console.WriteLine($"¡Bienvenido a la mazmorra {nombre}!");
             foreach (var monstruo in monstruos)
             {
-                Console.WriteLine($"Aparece un {monstruo.Tipo}, CUIDADO!");
+                Console.WriteLine($"<<<---APARECE UN {monstruo.Tipo}, CUIDADO!--->>>");
                 if (!(Combate(personaje, monstruo)))
                 {
                     return false;
                 }
 
             }
-            Console.WriteLine("Salud al 100% por llegar al jefe");
+            Console.WriteLine("SALUD AL 100% POR LLEGAR A LA SALA DEL JEFE");
             personaje.Salud = 100;
             if (!(Combate(personaje, jefe)))
             {
                 return false;
             }
+            completada = true;
             return true;
         }
 
@@ -45,6 +47,22 @@ namespace Mazmorras
             int defensaJugador = jugador.Armadura * jugador.Velocidad;
             int ataqueMonstruo = monstruo.Destreza * monstruo.Fuerza * monstruo.Nivel;
             int defensaMonstruo = monstruo.Armadura * monstruo.Velocidad;
+
+            Console.WriteLine("DESEA SALTEAR EL EFECTO COMBATE?");
+            Console.WriteLine("1.SI");
+            Console.WriteLine("2.NO");
+            Console.Write("Responda a continuacion: ");
+            string respuesta = Console.ReadLine();
+            while (respuesta != "1" && respuesta != "2")
+            {
+                Console.WriteLine("***RESPUESTA NO VALIDA***");
+                Console.WriteLine("DESEA SALTEAR EL EFECTO COMBATE?");
+                Console.WriteLine("1.SI");
+                Console.WriteLine("2.NO");
+                Console.Write("Responda a continuacion: ");
+                respuesta = Console.ReadLine();
+            }
+
             while (jugador.Salud > 0 && monstruo.Salud > 0)
             {
                 if (jugador.Velocidad >= monstruo.Velocidad)
@@ -56,6 +74,11 @@ namespace Mazmorras
                         danioJugador = 0;
                     }
                     Console.WriteLine($"Danio provoca jugador: {danioJugador}");
+                    if (respuesta == "2")
+                    {
+                        FuncionesVarias.EfectoCombatePersonaje(jugador, monstruo, danioJugador);
+                    }
+
                     monstruo.Salud -= danioJugador;
                     if (monstruo.Salud <= 0)
                     {
@@ -71,6 +94,11 @@ namespace Mazmorras
                 {
                     danioMonstruo = 0;
                 }
+                if (respuesta == "2")
+                {
+                    FuncionesVarias.EfectoCombateMonstruo(jugador, monstruo, danioMonstruo);
+                }
+
                 jugador.Salud -= danioMonstruo;
                 if (jugador.Salud <= 0)
                 {
@@ -87,6 +115,10 @@ namespace Mazmorras
                         danioJugador = 0;
                     }
                     Console.WriteLine($"Danio provoca jugador: {danioJugador}");
+                    if (respuesta == "2")
+                    {
+                        FuncionesVarias.EfectoCombatePersonaje(jugador, monstruo, danioJugador);
+                    }
                     monstruo.Salud -= danioJugador;
                     if (monstruo.Salud <= 0)
                     {
