@@ -12,7 +12,7 @@
             "program": "${workspaceFolder}/MiProyecto/bin/Debug/net8.0/MiProyecto.dll",
             "args": [],
             "cwd": "${workspaceFolder}/MiProyecto",
-            "console": "externalTerminal",
+            "console": "integratedTerminal",
             "stopAtEntry": false
         },
         {

@@ -48,20 +48,20 @@ namespace Mazmorras
             int ataqueMonstruo = monstruo.Destreza * monstruo.Fuerza * monstruo.Nivel;
             int defensaMonstruo = monstruo.Armadura * monstruo.Velocidad;
 
-            Console.WriteLine("DESEA SALTEAR EL EFECTO COMBATE?");
-            Console.WriteLine("1.SI");
-            Console.WriteLine("2.NO");
-            Console.Write("Responda a continuacion: ");
-            string respuesta = Console.ReadLine();
-            while (respuesta != "1" && respuesta != "2")
+
+            string respuesta;
+            do
             {
-                Console.WriteLine("***RESPUESTA NO VALIDA***");
                 Console.WriteLine("DESEA SALTEAR EL EFECTO COMBATE?");
                 Console.WriteLine("1.SI");
                 Console.WriteLine("2.NO");
-                Console.Write("Responda a continuacion: ");
+                Console.Write("Ingrese su respuesta: ");
                 respuesta = Console.ReadLine();
-            }
+                if (respuesta != "1" && respuesta != "2")
+                {
+                    Console.WriteLine("***RESPUESTA NO VALIDA***");
+                }
+            } while (respuesta != "1" && respuesta != "2");
 
             while (jugador.Salud > 0 && monstruo.Salud > 0)
             {
@@ -73,7 +73,7 @@ namespace Mazmorras
                     {
                         danioJugador = 0;
                     }
-                    Console.WriteLine($"Danio provoca jugador: {danioJugador}");
+                    
                     if (respuesta == "2")
                     {
                         FuncionesVarias.EfectoCombatePersonaje(jugador, monstruo, danioJugador);
@@ -114,7 +114,7 @@ namespace Mazmorras
                     {
                         danioJugador = 0;
                     }
-                    Console.WriteLine($"Danio provoca jugador: {danioJugador}");
+                    
                     if (respuesta == "2")
                     {
                         FuncionesVarias.EfectoCombatePersonaje(jugador, monstruo, danioJugador);
@@ -128,8 +128,7 @@ namespace Mazmorras
                     }
                 }
 
-                Console.WriteLine($"Salud jugador: {jugador.Salud}");
-                Console.WriteLine($"Salud Monstruo: {monstruo.Salud}");
+                
 
             }
             return false;

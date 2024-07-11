@@ -5,7 +5,7 @@ using Mazmorras;
 using Funciones;
 
 
-FuncionesVarias.MostrarIntro();
+// FuncionesVarias.MostrarIntro();
 
 string nombre = Console.ReadLine();
 Personaje protagonista = new Personaje(nombre);

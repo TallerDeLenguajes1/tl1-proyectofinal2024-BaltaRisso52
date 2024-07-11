@@ -169,7 +169,7 @@ namespace Monstruos
         public int Fuerza { get => fuerza; set => fuerza = value; }
         public int Nivel { get => nivel; set => nivel = value; }
         public int Armadura { get => armadura; set => armadura = value; }
-        public int Salud { get => salud; set => salud = value; }
+        public int Salud { get => salud; set => salud = (value < 0) ? 0 : value; }
 
         public void MostrarCaracteristicas(){
             Console.WriteLine($"TIPO: {Tipo}");
