@@ -28,22 +28,23 @@ namespace Protagonista
         {
             this.Nombre = Nombre;
             Random random = new Random();
-            Edad = random.Next(18,31);
+            Edad = random.Next(18, 31);
             DateTime hoy = DateTime.Today; // obtener la fecha actual
             int anioNac = hoy.Year - Edad; // anio de nacimiento
-            int dia = random.Next(1,366); // numero aleatorio para el dia de nacimiento
-            Fechanac = new DateTime(anioNac, 1, 1).AddDays(dia - 1); 
+            int dia = random.Next(1, 366); // numero aleatorio para el dia de nacimiento
+            Fechanac = new DateTime(anioNac, 1, 1).AddDays(dia - 1);
 
             Velocidad = 2;
             Destreza = 1;
             Fuerza = 2;
             Nivel = 1;
             Armadura = 1;
-            Salud = 100;  
+            Salud = 100;
             Experiencia = 0;
         }
 
-        public void GanarExp(int ExpGanada){
+        public void GanarExp(int ExpGanada)
+        {
             Experiencia += ExpGanada;
 
             int ExpParaSigNivel = Nivel * 100;
@@ -56,19 +57,41 @@ namespace Protagonista
             }
         }
 
-        public void Entrenar(){
+        public void Entrenar()
+        {
+            Console.Clear();
+            Console.Write($"{Nombre} está entrenando");
+            int cursorLeft = Console.CursorLeft;
+            int cursorTop = Console.CursorTop;
+            string text = "...";
+            for (int i = 0; i < 3; i++)
+            {
+                foreach (var item in text)
+                {
+                    Console.Write(item);
+                    Thread.Sleep(500);
+                }
+                Console.SetCursorPosition(cursorLeft, cursorTop);
+                Console.WriteLine("   ");
+                Console.SetCursorPosition(cursorLeft, cursorTop);
+            }
             Random random = new Random();
-            Velocidad += random.Next(1,4);
-            Destreza += random.Next(1,4);
-            Fuerza += random.Next(1,4);
-            Armadura += random.Next(1,4);
+            Velocidad += random.Next(1, 4);
+            Destreza += random.Next(1, 4);
+            Fuerza += random.Next(1, 4);
+            Armadura += random.Next(1, 4);
             GanarExp(10);
+            Console.WriteLine();
+            Console.WriteLine("Entrenamiento completo. Estadísticas mejoradas.");
+            Console.WriteLine("Presiona cualquier tecla para continuar...                        ");
+            Console.ReadKey();
         }
 
-        
 
-        public void MostrarCaracteristicas(){
-            Console.WriteLine("**CARACTERISTICAS**");
+
+        public void MostrarCaracteristicas()
+        {
+            Console.WriteLine("***ESTADISTICAS***");
             Console.WriteLine($"Salud: {Salud}");
             Console.WriteLine($"Nivel: {Nivel}");
             Console.WriteLine($"Exp: {Experiencia}");
@@ -76,7 +99,7 @@ namespace Protagonista
             Console.WriteLine($"Velocidad: {Velocidad}");
             Console.WriteLine($"Destreza: {Destreza}");
             Console.WriteLine($"Armadura: {Armadura}");
-            
+
         }
 
 

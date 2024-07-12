@@ -1,6 +1,8 @@
 using Monstruos;
 using Protagonista;
 using Funciones;
+using System.Text.Json;
+
 namespace Mazmorras
 {
     public class Mazmorra
@@ -10,19 +12,54 @@ namespace Mazmorras
         private Monstruo jefe;
         private bool completada;
 
-        public Mazmorra(string Nombre, List<Monstruo> Monstruos, Monstruo Jefe)
+        public string Nombre { get => nombre; set => nombre = value; }
+        public List<Monstruo> Monstruos { get => monstruos; set => monstruos = value; }
+        public Monstruo Jefe { get => jefe; set => jefe = value; }
+        public bool Completada { get => completada; set => completada = value; }
+
+        public Mazmorra(string Nombre ,List<Monstruo> Monstruos, Monstruo Jefe)
         {
-            nombre = Nombre;
-            monstruos = Monstruos;
-            jefe = Jefe;
-            completada = false;
+
+            this.Nombre = Nombre;
+            this.Monstruos = Monstruos;
+            this.Jefe = Jefe;
+            Completada = false;
+            
+        }
+
+        public static async Task<Root> NombreMazmorraAsync()
+        {
+            Random random = new Random();
+            string numero = Convert.ToString(random.Next(1,61));
+            var url = $"https://swapi.dev/api/planets/{numero}/?format=json";
+            try
+            {
+                HttpClient client = new HttpClient();
+                HttpResponseMessage response = await client.GetAsync(url);
+                response.EnsureSuccessStatusCode();
+                string responseBody = await response.Content.ReadAsStringAsync();
+                Root root = JsonSerializer.Deserialize<Root>(responseBody);
+                return root;
+            }
+            catch (HttpRequestException e)
+            {
+                Console.WriteLine("Problemas de acceso a la API");
+                Console.WriteLine("Message :{0} ", e.Message);
+                return null;
+            }
+
         }
 
         public bool IniciarMazmorra(Personaje personaje)
         {
-            Console.WriteLine($"¡Bienvenido a la mazmorra {nombre}!");
-            foreach (var monstruo in monstruos)
+            Console.WriteLine($"¡Bienvenido a la mazmorra {Nombre}!");
+            FuncionesVarias.EfectoMazmorra();
+            Console.WriteLine("Presione una tecla para continuar...");
+            Console.ReadKey();
+
+            foreach (var monstruo in Monstruos)
             {
+                Console.Clear();
                 Console.WriteLine($"<<<---APARECE UN {monstruo.Tipo}, CUIDADO!--->>>");
                 if (!(Combate(personaje, monstruo)))
                 {
@@ -31,16 +68,20 @@ namespace Mazmorras
                 Console.WriteLine($"Salud luego del combate: {personaje.Salud}");
                 Console.WriteLine("Presione una tecla para el siguiente combate...");
                 Console.ReadKey();
-                Console.Clear();
+
 
             }
-            Console.WriteLine("SALUD AL 100% POR LLEGAR A LA SALA DEL JEFE");
+            Console.Clear();
+            Console.WriteLine("LLEGASTE A LA SALA DEL JEFE");
+            Console.WriteLine("RECOMPENSA: SALUD AL 100%");
+            Console.WriteLine("Presione una tecla para pelear con el jefe...");
+            Console.ReadKey();
             personaje.Salud = 100;
-            if (!(Combate(personaje, jefe)))
+            if (!(Combate(personaje, Jefe)))
             {
                 return false;
             }
-            completada = true;
+            Completada = true;
             return true;
         }
 
@@ -51,7 +92,7 @@ namespace Mazmorras
             int defensaJugador = jugador.Armadura * jugador.Velocidad;
             int ataqueMonstruo = monstruo.Destreza * monstruo.Fuerza * monstruo.Nivel;
             int defensaMonstruo = monstruo.Armadura * monstruo.Velocidad;
-
+            Console.Clear();
 
             string respuesta;
             do
@@ -77,7 +118,7 @@ namespace Mazmorras
                     {
                         danioJugador = 0;
                     }
-                    
+
                     if (respuesta == "2")
                     {
                         FuncionesVarias.EfectoCombatePersonaje(jugador, monstruo, danioJugador);
@@ -118,7 +159,7 @@ namespace Mazmorras
                     {
                         danioJugador = 0;
                     }
-                    
+
                     if (respuesta == "2")
                     {
                         FuncionesVarias.EfectoCombatePersonaje(jugador, monstruo, danioJugador);
@@ -132,7 +173,7 @@ namespace Mazmorras
                     }
                 }
 
-                
+
 
             }
             return false;
