@@ -96,7 +96,7 @@ namespace Protagonista
             Console.WriteLine("----ESTADISTICAS----");
             Console.WriteLine($"Salud: {Salud}");
             Console.WriteLine($"Nivel: {Nivel}");
-            Console.WriteLine($"Exp: {Experiencia}");
+            Console.WriteLine($"Exp: {Experiencia}/{nivel*100}");
             Console.WriteLine($"Fuerza: {Fuerza}");
             Console.WriteLine($"Velocidad: {Velocidad}");
             Console.WriteLine($"Destreza: {Destreza}");

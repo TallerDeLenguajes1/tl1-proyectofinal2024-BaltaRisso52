@@ -51,7 +51,9 @@ namespace Funciones
             ║     ¡Bienvenido a Solo Leveling: La Ascencion del Cazador!     ║
             ║                                                                ║
             ╠════════════════════════════════════════════════════════════════╣
-            ║ En un mundo de fantasia, aventura y mazmorras,                 ║
+            ║ En un mundo asolado por la aparición de mazmorras,             ║
+            ║ donde criaturas siniestras y secretos ancestrales              ║
+            ║ yacen en su interior,                                          ║
             ║ solo los cazadores más valientes se atreven a enfrentarlas.    ║
             ║ Eres un cazador novato, pero con un potencial increíble.       ║
             ║                                                                ║
@@ -64,7 +66,7 @@ namespace Funciones
             ║ El destino de la humanidad está en tus manos.                  ║
             ║                                                                ║
             ╠════════════════════════════════════════════════════════════════╣
-            ║            Presiona cualquier tecla para continuar...          ║
+            ║                Presiona enter para continuar...                ║
             ╚════════════════════════════════════════════════════════════════╝ ";
       foreach (var item in texto)
       {
@@ -124,7 +126,7 @@ namespace Funciones
         }
       }
       Console.WriteLine("LISTO!!");
-      Console.WriteLine("Presione cualquier tecla para continuar...");
+      Console.WriteLine("Presione enter para continuar...");
       Console.ReadKey();
 
       return mazmorras;
@@ -133,12 +135,24 @@ namespace Funciones
 
     public static void FelicitarJugador(Personaje jugador)
     {
+      Console.Clear();
+      Console.WriteLine(@"
+    ### ###  ### ###  ####       ####     # ###    ####   ### #        ##   ### #    ### ###    # ###  
+     ##  ##   ##  ##   ##         ##     ##   #     ##     ## ##       ##    ## ##    ##  ##   ##  ##  
+     ##       #        ##         ##    ###         ##     ##  ##    # ##    ##  ##   #        ##      
+     ## ##    ## ##    ##         ##    ###         ##     ##  ##    #  ##   ##  ##   ## ##     ####   
+     ##       ##       ##   #     ##    ###         ##     ##  ##   # ####   ##  ##   ##           ##  
+     ##       ##  ##   ##  ##     ##     ##   #     ##     ## ##    #   ##   ## ##    ##  ##   ##  ##  
+    ####      #  ###  #######    ####     # ###    ####    #  #    ### ###   #  #     #  ###   ## ##   ");
       Console.WriteLine($"¡Felicitaciones, {jugador.Nombre}!");
       Console.WriteLine("¡Has completado el juego con gran éxito!");
       Console.WriteLine($"Nivel Alcanzado: {jugador.Nivel}");
       Console.WriteLine("Tu dedicación y habilidades te han llevado a la victoria.");
       Console.WriteLine("¡Esperamos que hayas disfrutado la aventura tanto como nosotros disfrutamos creando este juego para ti!");
       Console.WriteLine("¡Gracias por jugar!");
+      Console.WriteLine("Presione enter para continuar...");
+      Console.ReadKey();
+
     }
 
     public static void Menu(Personaje personaje, List<Mazmorra> mazmorras)
@@ -146,6 +160,7 @@ namespace Funciones
       bool salir = false;
       while (!salir)
       {
+        
         Console.WriteLine("╔════════════════════════════════════════════╗");
         Console.WriteLine("║--------------------MENU--------------------║");
         Console.WriteLine("╠════════════════════════════════════════════╣");
@@ -173,6 +188,7 @@ namespace Funciones
           case "3":
             if (mazmorras.Count == 0)
             {
+              Console.Clear();
               Console.WriteLine("TERMINASTE TODAS LAS MAZMORRAS. CONTINUARA...");
             }
             else
@@ -190,6 +206,7 @@ namespace Funciones
               if (mazmorras.Count == 0)
               {
                 FelicitarJugador(personaje);
+                PartidaJson.AgregarHistorialDeGanadores(personaje);
               }
 
             }
@@ -261,7 +278,7 @@ namespace Funciones
         +***#*+*%@@@@%%%#@@@@%%%@@@@@@%==+*++*=::    
         -----===#@@@@%%%#@@@@%@%@@@@@@#:-=-.=*+==:   
         ------+-#@@@@@@@@@@@@@@@@@@@@@%=---::----:   ");
-      Console.WriteLine("Presione una tecla para entrar a la mazmorra...");
+      Console.WriteLine("Presione enter para entrar a la mazmorra...");
       Console.ReadKey();
       Console.SetCursorPosition(cursorLeft, cursorTop);
       Console.WriteLine(@"

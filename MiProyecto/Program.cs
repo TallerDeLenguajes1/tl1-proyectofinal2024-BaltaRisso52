@@ -5,42 +5,6 @@ using Mazmorras;
 using Funciones;
 using Partida;
 
-
-
-// Personaje protagonista = FuncionesVarias.CrearPersonaje();
-// List<Mazmorra> mazmorras1 = await FuncionesVarias.CrearLista11Mazmorras();
-// PartidaJson.GuardarPartida(protagonista, mazmorras1, "baltari");
-// Console.ReadKey();
-// int nume = 1;
-// foreach (var item in mazmorras1)
-// {
-//     Console.WriteLine($"mazmorra numero {nume}");
-//     Console.WriteLine($"nombre: {item.Nombre}");
-//     foreach (var item2 in item.Monstruos)
-//     {
-//         Console.WriteLine($"tipo de monstruo: {item2.Tipo}");
-//     }
-//     Console.WriteLine($"jefe: {item.Jefe.Tipo}");
-//     Console.WriteLine("--------------------");
-//     nume++;
-// }
-// protagonista.Entrenar();
-// protagonista.Entrenar();
-// protagonista.Entrenar();
-// List<Monstruo> monstruos = new List<Monstruo>();
-// Monstruo globin = new Monstruo(Tipos.Goblin);
-// Monstruo globin2 = new Monstruo(Tipos.Goblin);
-// Monstruo lobo = new Monstruo((Tipos)2);
-// monstruos.Add(globin);
-// monstruos.Add(globin2);
-// var nombre = await Mazmorra.NombreMazmorraAsync();
-// Console.WriteLine(nombre.name);
-// Console.WriteLine(nombre.climate);
-// Console.WriteLine(nombre.terrain);
-
-// Mazmorra mazmorra = new Mazmorra(nombre.name, monstruos, lobo);
-// mazmorra.IniciarMazmorra(protagonista);
-
 // MOSTRAR LA INTRODUCCION DEJ JUEGO
 FuncionesVarias.MostrarIntro();
 
@@ -53,7 +17,8 @@ while (!salir)
     Console.WriteLine("╠════════════════════════════════════════════╣");
     Console.WriteLine("║ 1. Nueva Partida                           ║");
     Console.WriteLine("║ 2. Cargar Partida                          ║");
-    Console.WriteLine("║ 3. Salir                                   ║");
+    Console.WriteLine("║ 3. Historial de ganadores                  ║");
+    Console.WriteLine("║ 4. Salir                                   ║");
     Console.WriteLine("╚════════════════════════════════════════════╝");
     Console.Write("Ingrese su respuesta: ");
     string respuesta = Console.ReadLine();
@@ -70,16 +35,11 @@ while (!salir)
             List<Mazmorra> mazmorras = await FuncionesVarias.CrearLista11Mazmorras();
 
             Console.Clear();
-            FuncionesVarias.Menu(jugador, mazmorras);
-
-
-
-
-
-
+            FuncionesVarias.Menu(jugador, mazmorras); // MOSTRAR MENU 
             break;
 
         case "2":
+            Console.Clear();
             Console.Write("Ingrese el nombre de su partida: ");
             string nombre = Console.ReadLine();
             string rutaRelativa = @"..\Partidas Guardadas";
@@ -101,8 +61,12 @@ while (!salir)
             break;
 
         case "3":
+            PartidaJson.MostrarHistorialGanadores();
+            break;
+
+        case "4":
             Console.WriteLine("Gracias por jugar. ¡Hasta la próxima!");
-            Console.WriteLine("Presione una tecla para salir...");
+            Console.WriteLine("Presione enter para salir...");
             Console.ReadKey();
             salir = true;
             break;
