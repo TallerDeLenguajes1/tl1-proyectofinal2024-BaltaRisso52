@@ -1,7 +1,6 @@
 using Protagonista;
 using Mazmorras;
 using System.Text.Json;
-using System.Security.Cryptography.X509Certificates;
 
 namespace Partida
 {
@@ -21,129 +20,62 @@ namespace Partida
 
         public static void GuardarPartida(Personaje personaje, List<Mazmorra> mazmorras, string nombreArchivo)
         {
-
-            PartidaJson partida = new PartidaJson(personaje, mazmorras);
-            string jsonString = JsonSerializer.Serialize(partida);
-
-            string rutaRelativa = @"..\Partidas Guardadas";
-            string rutaAbsolutaCarpeta = Path.GetFullPath(rutaRelativa);
-
-            if (!Directory.Exists(rutaAbsolutaCarpeta))
+            try
             {
-                try
+                PartidaJson partida = new PartidaJson(personaje, mazmorras);
+                string jsonString = JsonSerializer.Serialize(partida);
+
+                string rutaRelativa = @"..\Partidas Guardadas";
+                string rutaAbsolutaCarpeta = Path.GetFullPath(rutaRelativa);
+
+                // si el nombre del archivo está vacío lanzo la excepcion
+                // y la agarro en el catch
+                // asi como tu mamá me agarra esta
+                if (string.IsNullOrWhiteSpace(nombreArchivo))
+                {
+                    throw new Exception($"el nombre de archivo no puede estar vacío");
+                }
+
+                if (!Directory.Exists(rutaAbsolutaCarpeta))
                 {
                     // Crear la carpeta
                     Directory.CreateDirectory(rutaAbsolutaCarpeta);
+                }
 
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine($"Error al crear la carpeta: {e.Message}");
-                }
+
+                string rutaAbsolutaArchivo = Path.Combine(rutaAbsolutaCarpeta, nombreArchivo + ".json");
+
+                File.WriteAllText(rutaAbsolutaArchivo, jsonString);
+                Console.WriteLine("Guardada con exito!!!");
             }
-
-
-            string rutaAbsolutaArchivo = Path.Combine(rutaAbsolutaCarpeta, nombreArchivo + ".json");
-
-            File.WriteAllText(rutaAbsolutaArchivo, jsonString);
-            Console.WriteLine("Guardada con exito!!!");
+            catch (Exception e)
+            {
+                System.Console.WriteLine($"Ha ocurrido un error guardando la partida: {e.Message}");
+            }
+            
 
         }
 
         public static PartidaJson CargarPartida(string nombreArchivo)
         {
-            string rutaRelativa = @"..\Partidas Guardadas";
-            string rutaAbsolutaCarpeta = Path.GetFullPath(rutaRelativa);
-            string rutaAbsolutaArchivo = Path.Combine(rutaAbsolutaCarpeta, nombreArchivo + ".json");
-
-            string json = File.ReadAllText(rutaAbsolutaArchivo);
-
-            PartidaJson partida = JsonSerializer.Deserialize<PartidaJson>(json);
-
-            return partida;
-        }
-
-        public static void AgregarHistorialDeGanadores(Personaje personaje)
-        {
-
-            string rutaRelativa = @"..\Historial de Ganadores";
-            string rutaAbsolutaCarpeta = Path.GetFullPath(rutaRelativa);
-
-            if (!Directory.Exists(rutaAbsolutaCarpeta))
+            try
             {
-                try
-                {
-                    // Crear la carpeta
-                    Directory.CreateDirectory(rutaAbsolutaCarpeta);
+                string rutaRelativa = @"..\Partidas Guardadas";
+                string rutaAbsolutaCarpeta = Path.GetFullPath(rutaRelativa);
+                string rutaAbsolutaArchivo = Path.Combine(rutaAbsolutaCarpeta, nombreArchivo + ".json");
 
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine($"Error al crear la carpeta: {e.Message}");
-                }
-            }
-
-            string rutaAbsolutaArchivo = Path.Combine(rutaAbsolutaCarpeta, "ListaGanadores.json");
-
-            if (!File.Exists(rutaAbsolutaArchivo))
-            {
-                List<Personaje> personajes = new List<Personaje>();
-                personajes.Add(personaje);
-
-                string jsonString = JsonSerializer.Serialize(personajes);
-
-                File.WriteAllText(rutaAbsolutaArchivo, jsonString);
-                Console.WriteLine("Se agrego al historial de ganadores con exito!!");
-
-
-            }
-            else
-            {
                 string json = File.ReadAllText(rutaAbsolutaArchivo);
 
-                List<Personaje> personajes = JsonSerializer.Deserialize<List<Personaje>>(json);
-                personajes.Add(personaje);
+                PartidaJson partida = JsonSerializer.Deserialize<PartidaJson>(json);
 
-                string jsonString = JsonSerializer.Serialize(personajes);
-
-                File.WriteAllText(rutaAbsolutaArchivo, jsonString);
-                Console.WriteLine("Se agrego al historial de ganadores con exito!!");
-            }
-
-        }
-
-        public static void MostrarHistorialGanadores()
-        {
-
-            string rutaRelativa = @"..\Historial de Ganadores";
-            string rutaAbsolutaCarpeta = Path.GetFullPath(rutaRelativa);
-            string rutaAbsolutaArchivo = Path.Combine(rutaAbsolutaCarpeta, "ListaGanadores.json");
-
-            Console.Clear();
-            if (File.Exists(rutaAbsolutaArchivo))
+                return partida;
+            } 
+            catch (Exception e)
             {
-                string json = File.ReadAllText(rutaAbsolutaArchivo);
-
-                List<Personaje> personajes = JsonSerializer.Deserialize<List<Personaje>>(json);
-                int n = 1;
-                foreach (var item in personajes)
-                {
-                    
-                    Console.WriteLine($"--------{n}--------");
-                    Console.WriteLine($"Nombre del personaje: {item.Nombre}");
-                    item.MostrarCaracteristicas();
-                    n++;
-                }
-            }else
-            {
-                Console.WriteLine("Aun no hay ganadores en el historial");
+                System.Console.WriteLine($"Ha ocurrido un error leyendo la partida: {e.Message}");
+                return null;
             }
-
-
         }
-
-
-
-
+        
     }
 }

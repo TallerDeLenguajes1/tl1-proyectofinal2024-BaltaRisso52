@@ -45,7 +45,7 @@ namespace Mazmorras
             {
                 Console.WriteLine("Problemas de acceso a la API");
                 Console.WriteLine("Message :{0} ", e.Message);
-                return null;
+                return new Root() { name = "Mazmorra" };
             }
 
         }
@@ -54,7 +54,7 @@ namespace Mazmorras
         {
             Console.Clear();
             Console.WriteLine($"¡Bienvenido a la mazmorra {Nombre}!");
-            FuncionesVarias.EfectoMazmorra();
+            FuncionesMazmorra.EfectoMazmorra();
             Console.WriteLine("Presione una tecla para continuar...");
             Console.ReadKey();
 
@@ -135,7 +135,7 @@ namespace Mazmorras
 
                     if (respuesta == "2")
                     {
-                        FuncionesVarias.EfectoCombatePersonaje(jugador, monstruo, danioJugador);
+                        FuncionesMazmorra.EfectoCombatePersonaje(jugador, monstruo, danioJugador);
                     }
 
                     monstruo.Salud -= danioJugador;
@@ -155,7 +155,7 @@ namespace Mazmorras
                 }
                 if (respuesta == "2")
                 {
-                    FuncionesVarias.EfectoCombateMonstruo(jugador, monstruo, danioMonstruo);
+                    FuncionesMazmorra.EfectoCombateMonstruo(jugador, monstruo, danioMonstruo);
                 }
 
                 jugador.Salud -= danioMonstruo;
@@ -176,7 +176,7 @@ namespace Mazmorras
 
                     if (respuesta == "2")
                     {
-                        FuncionesVarias.EfectoCombatePersonaje(jugador, monstruo, danioJugador);
+                        FuncionesMazmorra.EfectoCombatePersonaje(jugador, monstruo, danioJugador);
                     }
                     monstruo.Salud -= danioJugador;
                     if (monstruo.Salud <= 0)

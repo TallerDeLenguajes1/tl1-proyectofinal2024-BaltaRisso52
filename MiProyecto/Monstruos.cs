@@ -32,8 +32,23 @@ namespace Monstruos
 
         public Monstruo(Tipos Tipo)
         {
-            Random random = new Random();
             this.Tipo = Tipo;
+            generarAtributos();
+        }
+
+        public Tipos Tipo { get => tipo; set => tipo = value; }
+        public int Velocidad { get => velocidad; set => velocidad = value; }
+        public int Destreza { get => destreza; set => destreza = value; }
+        public int Fuerza { get => fuerza; set => fuerza = value; }
+        public int Nivel { get => nivel; set => nivel = value; }
+        public int Armadura { get => armadura; set => armadura = value; }
+        public int Salud { get => salud; set => salud = (value < 0) ? 0 : value; }
+
+        // puto el que lee
+        private void generarAtributos()
+        {
+            Random random = new Random();
+
             switch (Tipo)
             {
                 case Tipos.Goblin:
@@ -162,14 +177,6 @@ namespace Monstruos
                 break;
             }
         }
-
-        public Tipos Tipo { get => tipo; set => tipo = value; }
-        public int Velocidad { get => velocidad; set => velocidad = value; }
-        public int Destreza { get => destreza; set => destreza = value; }
-        public int Fuerza { get => fuerza; set => fuerza = value; }
-        public int Nivel { get => nivel; set => nivel = value; }
-        public int Armadura { get => armadura; set => armadura = value; }
-        public int Salud { get => salud; set => salud = (value < 0) ? 0 : value; }
 
         public void MostrarCaracteristicas(){
             Console.WriteLine($"TIPO: {Tipo}");

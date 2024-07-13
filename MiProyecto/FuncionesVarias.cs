@@ -1,4 +1,5 @@
 using System.Security.Cryptography.X509Certificates;
+using Historial;
 using Mazmorras;
 using Monstruos;
 using Partida;
@@ -6,7 +7,33 @@ using Protagonista;
 
 namespace Funciones
 {
-  class FuncionesVarias
+
+  public static class FuncionesPersonaje
+  {
+    public static Personaje CrearPersonaje()
+    {
+
+      Console.Write("Antes de comenzar, por favor ingresa el nombre de tu personaje: ");
+      string nombre = Console.ReadLine();
+
+      //Retorna true si la cadena es null, una cadena vacía ("") o contiene solo caracteres de espacio en blanco (' '), y false en cualquier otro caso.
+      while (string.IsNullOrWhiteSpace(nombre) || nombre.Length > 25)
+      {
+        Console.Write("El nombre no puede ser vacio y no debe superar los 25 caracteres.");
+        Console.Write("Antes de comenzar, por favor ingresa el nombre de tu personaje: ");
+        nombre = Console.ReadLine();
+      }
+
+      Personaje jugador = new Personaje(nombre);
+
+      Console.WriteLine($"¡Bienvenido, {nombre}! Tus estadísticas iniciales son:");
+      jugador.MostrarCaracteristicas();
+
+      return jugador;
+    }
+  }
+
+  public static class FuncionesPartida
   {
     public static void MostrarIntro()
     {
@@ -78,89 +105,12 @@ namespace Funciones
 
     }
 
-    public static Personaje CrearPersonaje()
-    {
-      Console.Write("Antes de comenzar, por favor ingresa el nombre de tu personaje: ");
-      string nombre = Console.ReadLine();
-
-      Personaje jugador = new Personaje(nombre);
-
-      Console.WriteLine($"¡Bienvenido, {nombre}! Tus estadísticas iniciales son:");
-      jugador.MostrarCaracteristicas();
-
-      return jugador;
-    }
-
-    public static async Task<List<Mazmorra>> CrearLista11Mazmorras()
-    {
-      Console.WriteLine("Preparando todo para empezar...");
-      List<Mazmorra> mazmorras = new List<Mazmorra>(); // CREO LISTA DE MAZMORRAS
-      Random random = new Random();
-      for (int i = 0; i < 11; i++) // HAGO UN BUCLE PARA HACER 11 MAZMORRAS
-      {
-        // CREO 2 MONSTRUOS PARA CADA MAZMORRA
-        Monstruo monstruo1 = new Monstruo((Tipos)random.Next(i, i + 2));
-        Monstruo monstruo2 = new Monstruo((Tipos)random.Next(i, i + 2));
-
-        List<Monstruo> monstruos = new List<Monstruo>(); // LISTA DE MONSTRUOS
-
-        // AGREGO LOS MONSTRUOS A LA LISTA
-        monstruos.Add(monstruo1);
-        monstruos.Add(monstruo2);
-
-        Monstruo jefe = new Monstruo((Tipos)random.Next(i + 2, i + 2)); // CREO EL JEFE DE LA MAZMORRA
-
-        var nombre = await Mazmorra.NombreMazmorraAsync(); // PARA EL NOMBRE DE LA MAZMORRA DESDE UNA API
-
-        Mazmorra mazmorra = new Mazmorra(nombre.name, monstruos, jefe); // CONSTRUCTOR DE MAZMORRA
-
-        mazmorras.Add(mazmorra); // AGREGO LA MAZMORRA A LA LISTA
-
-        if (i == 4)
-        {
-          Console.WriteLine("Ya estamos terminando...");
-        }
-        if (i == 8)
-        {
-          Console.WriteLine("Ya casii...");
-        }
-      }
-      Console.WriteLine("LISTO!!");
-      Console.WriteLine("Presione enter para continuar...");
-      Console.ReadKey();
-
-      return mazmorras;
-
-    }
-
-    public static void FelicitarJugador(Personaje jugador)
-    {
-      Console.Clear();
-      Console.WriteLine(@"
-    ### ###  ### ###  ####       ####     # ###    ####   ### #        ##   ### #    ### ###    # ###  
-     ##  ##   ##  ##   ##         ##     ##   #     ##     ## ##       ##    ## ##    ##  ##   ##  ##  
-     ##       #        ##         ##    ###         ##     ##  ##    # ##    ##  ##   #        ##      
-     ## ##    ## ##    ##         ##    ###         ##     ##  ##    #  ##   ##  ##   ## ##     ####   
-     ##       ##       ##   #     ##    ###         ##     ##  ##   # ####   ##  ##   ##           ##  
-     ##       ##  ##   ##  ##     ##     ##   #     ##     ## ##    #   ##   ## ##    ##  ##   ##  ##  
-    ####      #  ###  #######    ####     # ###    ####    #  #    ### ###   #  #     #  ###   ## ##   ");
-      Console.WriteLine($"¡Felicitaciones, {jugador.Nombre}!");
-      Console.WriteLine("¡Has completado el juego con gran éxito!");
-      Console.WriteLine($"Nivel Alcanzado: {jugador.Nivel}");
-      Console.WriteLine("Tu dedicación y habilidades te han llevado a la victoria.");
-      Console.WriteLine("¡Esperamos que hayas disfrutado la aventura tanto como nosotros disfrutamos creando este juego para ti!");
-      Console.WriteLine("¡Gracias por jugar!");
-      Console.WriteLine("Presione enter para continuar...");
-      Console.ReadKey();
-
-    }
-
     public static void Menu(Personaje personaje, List<Mazmorra> mazmorras)
     {
       bool salir = false;
       while (!salir)
       {
-        
+
         Console.WriteLine("╔════════════════════════════════════════════╗");
         Console.WriteLine("║--------------------MENU--------------------║");
         Console.WriteLine("╠════════════════════════════════════════════╣");
@@ -206,7 +156,7 @@ namespace Funciones
               if (mazmorras.Count == 0)
               {
                 FelicitarJugador(personaje);
-                PartidaJson.AgregarHistorialDeGanadores(personaje);
+                HistorialJson.AgregarHistorialDeGanadores(personaje);
               }
 
             }
@@ -239,6 +189,75 @@ namespace Funciones
 
         }
       }
+    }
+
+    public static void FelicitarJugador(Personaje jugador)
+    {
+      Console.Clear();
+      Console.WriteLine(@"
+    ### ###  ### ###  ####       ####     # ###    ####   ### #        ##   ### #    ### ###    # ###  
+     ##  ##   ##  ##   ##         ##     ##   #     ##     ## ##       ##    ## ##    ##  ##   ##  ##  
+     ##       #        ##         ##    ###         ##     ##  ##    # ##    ##  ##   #        ##      
+     ## ##    ## ##    ##         ##    ###         ##     ##  ##    #  ##   ##  ##   ## ##     ####   
+     ##       ##       ##   #     ##    ###         ##     ##  ##   # ####   ##  ##   ##           ##  
+     ##       ##  ##   ##  ##     ##     ##   #     ##     ## ##    #   ##   ## ##    ##  ##   ##  ##  
+    ####      #  ###  #######    ####     # ###    ####    #  #    ### ###   #  #     #  ###   ## ##   ");
+      Console.WriteLine($"¡Felicitaciones, {jugador.Nombre}!");
+      Console.WriteLine("¡Has completado el juego con gran éxito!");
+      Console.WriteLine($"Nivel Alcanzado: {jugador.Nivel}");
+      Console.WriteLine("Tu dedicación y habilidades te han llevado a la victoria.");
+      Console.WriteLine("¡Esperamos que hayas disfrutado la aventura tanto como nosotros disfrutamos creando este juego para ti!");
+      Console.WriteLine("¡Gracias por jugar!");
+      Console.WriteLine("Presione enter para continuar...");
+      Console.ReadKey();
+
+    }
+
+  }
+
+  public static class FuncionesMazmorra
+
+  {
+    public static async Task<List<Mazmorra>> CrearLista11Mazmorras()
+    {
+      Console.WriteLine("Preparando todo para empezar...");
+      List<Mazmorra> mazmorras = new List<Mazmorra>(); // CREO LISTA DE MAZMORRAS
+      Random random = new Random();
+      for (int i = 0; i < 11; i++) // HAGO UN BUCLE PARA HACER 11 MAZMORRAS
+      {
+        // CREO 2 MONSTRUOS PARA CADA MAZMORRA
+        Monstruo monstruo1 = new Monstruo((Tipos)random.Next(i, i + 2));
+        Monstruo monstruo2 = new Monstruo((Tipos)random.Next(i, i + 2));
+
+        List<Monstruo> monstruos = new List<Monstruo>(); // LISTA DE MONSTRUOS
+
+        // AGREGO LOS MONSTRUOS A LA LISTA
+        monstruos.Add(monstruo1);
+        monstruos.Add(monstruo2);
+
+        Monstruo jefe = new Monstruo((Tipos)random.Next(i + 2, i + 2)); // CREO EL JEFE DE LA MAZMORRA
+
+        var nombre = await Mazmorra.NombreMazmorraAsync(); // PARA EL NOMBRE DE LA MAZMORRA DESDE UNA API
+
+        Mazmorra mazmorra = new Mazmorra(nombre.name, monstruos, jefe); // CONSTRUCTOR DE MAZMORRA
+
+        mazmorras.Add(mazmorra); // AGREGO LA MAZMORRA A LA LISTA
+
+        if (i == 4)
+        {
+          Console.WriteLine("Ya estamos terminando...");
+        }
+        if (i == 8)
+        {
+          Console.WriteLine("Ya casii...");
+        }
+      }
+      Console.WriteLine("LISTO!!");
+      Console.WriteLine("Presione enter para continuar...");
+      Console.ReadKey();
+
+      return mazmorras;
+
     }
 
     public static void EfectoMazmorra()
@@ -662,7 +681,6 @@ namespace Funciones
 
 
     }
-
 
   }
 }

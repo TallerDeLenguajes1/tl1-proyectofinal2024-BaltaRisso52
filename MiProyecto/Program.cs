@@ -1,12 +1,12 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using Protagonista;
-using Monstruos;
 using Mazmorras;
 using Funciones;
 using Partida;
+using Historial;
 
 // MOSTRAR LA INTRODUCCION DEJ JUEGO
-FuncionesVarias.MostrarIntro();
+FuncionesPartida.MostrarIntro();
 
 
 bool salir = false;
@@ -28,18 +28,20 @@ while (!salir)
         case "1":
             Console.Clear();
             // CREAR EL PERSONAJE DEL JUGADOR
-            Personaje jugador = FuncionesVarias.CrearPersonaje();
+            Personaje jugador = FuncionesPersonaje.CrearPersonaje();
 
             Console.WriteLine();
             // CREO UNA LISTA DE 10 MAZMORRAS
-            List<Mazmorra> mazmorras = await FuncionesVarias.CrearLista11Mazmorras();
+            List<Mazmorra> mazmorras = await FuncionesMazmorra.CrearLista11Mazmorras();
 
             Console.Clear();
-            FuncionesVarias.Menu(jugador, mazmorras); // MOSTRAR MENU 
+            FuncionesPartida.Menu(jugador, mazmorras); // MOSTRAR MENU 
+
             break;
 
         case "2":
             Console.Clear();
+
             Console.Write("Ingrese el nombre de su partida: ");
             string nombre = Console.ReadLine();
             string rutaRelativa = @"..\Partidas Guardadas";
@@ -48,20 +50,24 @@ while (!salir)
             if (File.Exists(rutaAbsolutaArchivo))
             {
                 PartidaJson partida = PartidaJson.CargarPartida(nombre);
-                Console.WriteLine("Partida cargada exitosamente!!!");
-                Console.WriteLine("---DATOS DE LA PARTIDA---");
-                partida.Personaje.MostrarCaracteristicas();
-                Console.WriteLine($"Cantidad de mazmorras conquistadas: {11 - partida.Mazmorras.Count}");
-                FuncionesVarias.Menu(partida.Personaje, partida.Mazmorras);
+                
+                if (partida != null)
+                {
+                    Console.WriteLine("Partida cargada exitosamente!!!");
+                    Console.WriteLine("---DATOS DE LA PARTIDA---");
+                    partida.Personaje.MostrarCaracteristicas();
+                    Console.WriteLine($"Cantidad de mazmorras conquistadas: {11 - partida.Mazmorras.Count}");
+                    FuncionesPartida.Menu(partida.Personaje, partida.Mazmorras);
+                }
             }
             else
             {
-                Console.WriteLine("El nombre ingresado no coincide con una partida guardada.");
+                Console.WriteLine("El nombre ingresa do no coincide con una partida guardada.");
             }
             break;
 
         case "3":
-            PartidaJson.MostrarHistorialGanadores();
+            HistorialJson.MostrarHistorialGanadores();
             break;
 
         case "4":
@@ -73,13 +79,8 @@ while (!salir)
 
         default:
             Console.Clear();
-            Console.WriteLine("Opción no válida. Por favor, selecciona una opción del 1 al 3.");
+            Console.WriteLine("Opción no válida. Por favor, selecciona una opción del 1 al 4.");
             break;
 
     }
 }
-
-
-
-
-
