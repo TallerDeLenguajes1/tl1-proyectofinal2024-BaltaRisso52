@@ -3,10 +3,14 @@ using Protagonista;
 using Monstruos;
 using Mazmorras;
 using Funciones;
+using Partida;
+
+
 
 // Personaje protagonista = FuncionesVarias.CrearPersonaje();
 // List<Mazmorra> mazmorras1 = await FuncionesVarias.CrearLista11Mazmorras();
-
+// PartidaJson.GuardarPartida(protagonista, mazmorras1, "baltari");
+// Console.ReadKey();
 // int nume = 1;
 // foreach (var item in mazmorras1)
 // {
@@ -57,30 +61,54 @@ while (!salir)
     switch (respuesta)
     {
         case "1":
-            //  CREAR EL PERSONAJE DEL JUGADOR
-             Personaje jugador = FuncionesVarias.CrearPersonaje();
+            Console.Clear();
+            // CREAR EL PERSONAJE DEL JUGADOR
+            Personaje jugador = FuncionesVarias.CrearPersonaje();
 
-            //  CREO UNA LISTA DE 10 MAZMORRAS
-             List<Mazmorra> mazmorras = await FuncionesVarias.CrearLista11Mazmorras();
+            Console.WriteLine();
+            // CREO UNA LISTA DE 10 MAZMORRAS
+            List<Mazmorra> mazmorras = await FuncionesVarias.CrearLista11Mazmorras();
 
+            Console.Clear();
             FuncionesVarias.Menu(jugador, mazmorras);
 
 
 
-            
+
 
 
             break;
 
         case "2":
+            Console.Write("Ingrese el nombre de su partida: ");
+            string nombre = Console.ReadLine();
+            string rutaRelativa = @"..\Partidas Guardadas";
+            string rutaAbsolutaCarpeta = Path.GetFullPath(rutaRelativa);
+            string rutaAbsolutaArchivo = Path.Combine(rutaAbsolutaCarpeta, nombre + ".json");
+            if (File.Exists(rutaAbsolutaArchivo))
+            {
+                PartidaJson partida = PartidaJson.CargarPartida(nombre);
+                Console.WriteLine("Partida cargada exitosamente!!!");
+                Console.WriteLine("---DATOS DE LA PARTIDA---");
+                partida.Personaje.MostrarCaracteristicas();
+                Console.WriteLine($"Cantidad de mazmorras conquistadas: {11 - partida.Mazmorras.Count}");
+                FuncionesVarias.Menu(partida.Personaje, partida.Mazmorras);
+            }
+            else
+            {
+                Console.WriteLine("El nombre ingresado no coincide con una partida guardada.");
+            }
             break;
 
         case "3":
             Console.WriteLine("Gracias por jugar. ¡Hasta la próxima!");
+            Console.WriteLine("Presione una tecla para salir...");
+            Console.ReadKey();
             salir = true;
             break;
 
         default:
+            Console.Clear();
             Console.WriteLine("Opción no válida. Por favor, selecciona una opción del 1 al 3.");
             break;
 

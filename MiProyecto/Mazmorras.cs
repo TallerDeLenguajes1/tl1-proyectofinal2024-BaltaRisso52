@@ -17,20 +17,20 @@ namespace Mazmorras
         public Monstruo Jefe { get => jefe; set => jefe = value; }
         public bool Completada { get => completada; set => completada = value; }
 
-        public Mazmorra(string Nombre ,List<Monstruo> Monstruos, Monstruo Jefe)
+        public Mazmorra(string Nombre, List<Monstruo> Monstruos, Monstruo Jefe)
         {
 
             this.Nombre = Nombre;
             this.Monstruos = Monstruos;
             this.Jefe = Jefe;
             Completada = false;
-            
+
         }
 
         public static async Task<Root> NombreMazmorraAsync()
         {
             Random random = new Random();
-            string numero = Convert.ToString(random.Next(1,61));
+            string numero = Convert.ToString(random.Next(1, 61));
             var url = $"https://swapi.dev/api/planets/{numero}/?format=json";
             try
             {
@@ -52,6 +52,7 @@ namespace Mazmorras
 
         public bool IniciarMazmorra(Personaje personaje)
         {
+            Console.Clear();
             Console.WriteLine($"¡Bienvenido a la mazmorra {Nombre}!");
             FuncionesVarias.EfectoMazmorra();
             Console.WriteLine("Presione una tecla para continuar...");
@@ -60,9 +61,13 @@ namespace Mazmorras
             foreach (var monstruo in Monstruos)
             {
                 Console.Clear();
-                Console.WriteLine($"<<<---APARECE UN {monstruo.Tipo}, CUIDADO!--->>>");
+
                 if (!(Combate(personaje, monstruo)))
                 {
+                    foreach (var item in Monstruos)
+                    {
+                        item.Salud = 100;
+                    }
                     return false;
                 }
                 Console.WriteLine($"Salud luego del combate: {personaje.Salud}");
@@ -79,9 +84,15 @@ namespace Mazmorras
             personaje.Salud = 100;
             if (!(Combate(personaje, Jefe)))
             {
+                foreach (var item in Monstruos)
+                {
+                    item.Salud = 100;
+                }
+                Jefe.Salud = 100;
                 return false;
             }
             Completada = true;
+            Console.WriteLine($"Superaste la mazmorra {Nombre}, FELICITACIONES!!!");
             return true;
         }
 
@@ -93,6 +104,7 @@ namespace Mazmorras
             int ataqueMonstruo = monstruo.Destreza * monstruo.Fuerza * monstruo.Nivel;
             int defensaMonstruo = monstruo.Armadura * monstruo.Velocidad;
             Console.Clear();
+            Console.WriteLine($"<<<---APARECE UN {monstruo.Tipo}, CUIDADO!--->>>");
 
             string respuesta;
             do
@@ -107,6 +119,8 @@ namespace Mazmorras
                     Console.WriteLine("***RESPUESTA NO VALIDA***");
                 }
             } while (respuesta != "1" && respuesta != "2");
+            Console.Clear();
+            Console.WriteLine($"<<<---APARECE UN {monstruo.Tipo}, CUIDADO!--->>>");
 
             while (jugador.Salud > 0 && monstruo.Salud > 0)
             {
@@ -128,7 +142,7 @@ namespace Mazmorras
                     if (monstruo.Salud <= 0)
                     {
                         Console.WriteLine($"{monstruo.Tipo} ha sido derrotado.");
-                        jugador.GanarExp(monstruo.Nivel * 15);
+                        jugador.GanarExp(monstruo.Nivel * 5);
                         return true;
                     }
                 }
@@ -168,7 +182,7 @@ namespace Mazmorras
                     if (monstruo.Salud <= 0)
                     {
                         Console.WriteLine($"{monstruo.Tipo} ha sido derrotado.");
-                        jugador.GanarExp(monstruo.Nivel * 15);
+                        jugador.GanarExp(monstruo.Nivel * 5);
                         return true;
                     }
                 }

@@ -21,7 +21,7 @@ namespace Protagonista
         public int Fuerza { get => fuerza; set => fuerza = value; }
         public int Nivel { get => nivel; set => nivel = value; }
         public int Armadura { get => armadura; set => armadura = value; }
-        public int Salud { get => salud; set => salud = value; }
+        public int Salud { get => salud; set => salud = (value < 0) ? 0 : value; }
         public int Experiencia { get => experiencia; set => experiencia = value; }
 
         public Personaje(string Nombre)
@@ -53,7 +53,7 @@ namespace Protagonista
             {
                 Nivel++;
                 Experiencia -= ExpParaSigNivel;
-                Console.WriteLine($"***HAS ALCANZADO EL NIVEL >{Nivel}<***");
+                Console.WriteLine($"***HAS ALCANZADO EL NIVEL ===>{Nivel}<===***");
             }
         }
 
@@ -80,8 +80,9 @@ namespace Protagonista
             Destreza += random.Next(1, 4);
             Fuerza += random.Next(1, 4);
             Armadura += random.Next(1, 4);
-            GanarExp(10);
+            
             Console.WriteLine();
+            GanarExp(10);
             Console.WriteLine("Entrenamiento completo. Estadísticas mejoradas.");
             Console.WriteLine("Presiona cualquier tecla para continuar...                        ");
             Console.ReadKey();
@@ -91,7 +92,8 @@ namespace Protagonista
 
         public void MostrarCaracteristicas()
         {
-            Console.WriteLine("***ESTADISTICAS***");
+            Console.WriteLine("--------------------");
+            Console.WriteLine("----ESTADISTICAS----");
             Console.WriteLine($"Salud: {Salud}");
             Console.WriteLine($"Nivel: {Nivel}");
             Console.WriteLine($"Exp: {Experiencia}");
@@ -99,6 +101,7 @@ namespace Protagonista
             Console.WriteLine($"Velocidad: {Velocidad}");
             Console.WriteLine($"Destreza: {Destreza}");
             Console.WriteLine($"Armadura: {Armadura}");
+            Console.WriteLine("--------------------");
 
         }
 

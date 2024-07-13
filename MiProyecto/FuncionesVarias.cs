@@ -1,6 +1,7 @@
 using System.Security.Cryptography.X509Certificates;
 using Mazmorras;
 using Monstruos;
+using Partida;
 using Protagonista;
 
 namespace Funciones
@@ -113,9 +114,13 @@ namespace Funciones
 
         mazmorras.Add(mazmorra); // AGREGO LA MAZMORRA A LA LISTA
 
-        if (i == 5)
+        if (i == 4)
         {
           Console.WriteLine("Ya estamos terminando...");
+        }
+        if (i == 8)
+        {
+          Console.WriteLine("Ya casii...");
         }
       }
       Console.WriteLine("LISTO!!");
@@ -149,7 +154,7 @@ namespace Funciones
         Console.WriteLine("║ 3. Entrar a una mazmorra                   ║");
         Console.WriteLine("║ 4. Tomar pocion para la salud              ║");
         Console.WriteLine("║ 5. Guardar partida                         ║");
-        Console.WriteLine("║ 6. Salir                                   ║");
+        Console.WriteLine("║ 6. Volver                                  ║");
         Console.WriteLine("╚════════════════════════════════════════════╝");
         Console.Write("Ingrese su respuesta: ");
         string respuesta = Console.ReadLine();
@@ -157,6 +162,7 @@ namespace Funciones
         switch (respuesta)
         {
           case "1":
+            Console.Clear();
             personaje.MostrarCaracteristicas();
             break;
 
@@ -176,6 +182,11 @@ namespace Funciones
               {
                 mazmorras.RemoveAt(0);
               }
+              else
+              {
+                personaje.Salud = 1;
+              }
+              Console.WriteLine($"numero de mazmorras: {mazmorras.Count}");
               if (mazmorras.Count == 0)
               {
                 FelicitarJugador(personaje);
@@ -185,19 +196,27 @@ namespace Funciones
             break;
 
           case "4":
-            personaje.Entrenar();
+            Console.Clear();
+            Console.WriteLine("------------------------");
+            Console.WriteLine("Salud restaurada al 100%");
+            Console.WriteLine("------------------------");
+            personaje.Salud = 100;
             break;
 
           case "5":
-            personaje.Entrenar();
+            Console.Clear();
+            Console.Write("Ingrese el nombre de su partida: ");
+            string nombre = Console.ReadLine();
+            PartidaJson.GuardarPartida(personaje, mazmorras, nombre);
             break;
 
           case "6":
-            Console.WriteLine("Gracias por jugar. ¡Hasta la próxima!");
+            Console.Clear();
             salir = true;
             break;
 
           default:
+            Console.Clear();
             Console.WriteLine("Opción no válida. Por favor, selecciona una opción del 1 al 6.");
             break;
 
@@ -318,7 +337,7 @@ namespace Funciones
         #@+  +@#:        #%*                                              +=:::-         =-.:=                                                                               
         .@@+  =++         #@%:                                           +=:::-         =-.:=                               
                                                                                                             ");
-      Thread.Sleep(300);
+      Thread.Sleep(200);
 
       Console.SetCursorPosition(cursorLeft, cursorTop);
 
@@ -351,7 +370,7 @@ namespace Funciones
         #@+  +@#:        #%*                                               .#-#          +:--                     
         .@@+  =++         #@%:                                           +++--=.         -+:--                           
                                                                                                              ");
-      Thread.Sleep(300);
+      Thread.Sleep(200);
 
       Console.SetCursorPosition(cursorLeft, cursorTop);
 
@@ -464,7 +483,7 @@ namespace Funciones
         #@+  +@#:        #%*                                                                 +=:::-         =-.:=                     
         .@@+  =++         #@%:                                                              +=:::-         =-.:=                         
                                                                                                                                 ");
-      Thread.Sleep(300);
+      Thread.Sleep(150);
       Console.SetCursorPosition(cursorLeft, cursorTop);
       Console.WriteLine(@$"        SALUD: <<{monstruo.Salud}>>                                               SALUD: <<{jugador.Salud}>>         
                                                                                                                                              
@@ -495,7 +514,7 @@ namespace Funciones
         .@@+  =++         #@%:                                                              +=:::-         =-.:=                                            
                                                                                                                                            ");
 
-      Thread.Sleep(300);
+      Thread.Sleep(150);
       Console.SetCursorPosition(cursorLeft, cursorTop);
       Console.WriteLine(@$"        SALUD: <<{monstruo.Salud}>>                                               SALUD: <<{jugador.Salud}>>         
                                                                                                                                               
@@ -526,7 +545,7 @@ namespace Funciones
         .@@+  =++         #@%:                                                              +=:::-         =-.:=                                               
                                                                                                                                    ");
 
-      Thread.Sleep(300);
+      Thread.Sleep(150);
       Console.SetCursorPosition(cursorLeft, cursorTop);
       Console.WriteLine(@$"        SALUD: <<{monstruo.Salud}>>                                               SALUD: <<{jugador.Salud}>>         
                                                                                                                                                  
@@ -557,7 +576,7 @@ namespace Funciones
         .@@+  =++         #@%:                                                              +=:::-         =-.:=                                                 
                                                                                                                                   ");
 
-      Thread.Sleep(300);
+      Thread.Sleep(150);
       Console.SetCursorPosition(cursorLeft, cursorTop);
 
       if (saludJugadorDespuesDeAtaque == 0)
