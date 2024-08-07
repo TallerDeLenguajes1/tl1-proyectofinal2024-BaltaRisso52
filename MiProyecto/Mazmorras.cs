@@ -61,8 +61,8 @@ namespace Mazmorras
             foreach (var monstruo in Monstruos)
             {
                 Console.Clear();
-
-                if (!(Combate(personaje, monstruo)))
+                
+                if (!Combate(personaje, monstruo))
                 {
                     foreach (var item in Monstruos)
                     {
@@ -70,6 +70,7 @@ namespace Mazmorras
                     }
                     return false;
                 }
+                FuncionesPartida.LimpiarBuffer();
                 Console.WriteLine($"Salud luego del combate: {personaje.Salud}");
                 Console.WriteLine("Presione una tecla para el siguiente combate...");
                 Console.ReadKey();
@@ -82,7 +83,7 @@ namespace Mazmorras
             Console.WriteLine("Presione una tecla para pelear con el jefe...");
             Console.ReadKey();
             personaje.Salud = 100;
-            if (!(Combate(personaje, Jefe)))
+            if (!Combate(personaje, Jefe))
             {
                 foreach (var item in Monstruos)
                 {
@@ -96,7 +97,7 @@ namespace Mazmorras
             return true;
         }
 
-        public bool Combate(Personaje jugador, Monstruo monstruo)
+        public static bool Combate(Personaje jugador, Monstruo monstruo)
         {
             Random random = new Random();
             int ataqueJugador = jugador.Destreza * jugador.Fuerza * jugador.Nivel;
@@ -127,7 +128,7 @@ namespace Mazmorras
                 if (jugador.Velocidad >= monstruo.Velocidad)
                 {
                     int efectividadJugador = random.Next(1, 101);
-                    int danioJugador = ((ataqueJugador * efectividadJugador) - defensaMonstruo) / 500;
+                    int danioJugador = (ataqueJugador * efectividadJugador / 500 ) - defensaMonstruo;
                     if (danioJugador < 0)
                     {
                         danioJugador = 0;
@@ -148,7 +149,7 @@ namespace Mazmorras
                 }
 
                 int efectividadMonstruo = random.Next(1, 101);
-                int danioMonstruo = ((ataqueMonstruo * efectividadMonstruo) - defensaJugador) / 500;
+                int danioMonstruo = (ataqueMonstruo * efectividadMonstruo / 500 ) - defensaJugador;
                 if (danioMonstruo < 0)
                 {
                     danioMonstruo = 0;
@@ -168,7 +169,7 @@ namespace Mazmorras
                 if (jugador.Velocidad < monstruo.Velocidad)
                 {
                     int efectividadJugador = random.Next(1, 101);
-                    int danioJugador = ((ataqueJugador * efectividadJugador) - defensaMonstruo) / 500;
+                    int danioJugador = (ataqueJugador * efectividadJugador / 500 ) - defensaMonstruo;
                     if (danioJugador < 0)
                     {
                         danioJugador = 0;

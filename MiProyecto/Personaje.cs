@@ -1,3 +1,5 @@
+using Funciones;
+
 namespace Protagonista
 {
     public class Personaje
@@ -34,12 +36,12 @@ namespace Protagonista
             int dia = random.Next(1, 366); // numero aleatorio para el dia de nacimiento
             Fechanac = new DateTime(anioNac, 1, 1).AddDays(dia - 1);
 
-            Velocidad = 2;
-            Destreza = 1;
-            Fuerza = 2;
-            Nivel = 1;
-            Armadura = 1;
             Salud = 100;
+            Velocidad = random.Next(1, 6);
+            Destreza = random.Next(2, 5);
+            Fuerza = random.Next(2, 8);
+            Nivel = random.Next(2, 8);
+            Armadura = random.Next(1, 6);
             Experiencia = 0;
         }
 
@@ -75,16 +77,37 @@ namespace Protagonista
                 Console.WriteLine("   ");
                 Console.SetCursorPosition(cursorLeft, cursorTop);
             }
+
+            int velo = Velocidad;
+            int dest = Destreza;
+            int fuer = Fuerza;
+            int armad = Armadura;
+            int niv = Nivel;
+            int exp = Experiencia;
+
             Random random = new Random();
             Velocidad += random.Next(1, 4);
             Destreza += random.Next(1, 4);
             Fuerza += random.Next(1, 4);
             Armadura += random.Next(1, 4);
-            
+
             Console.WriteLine();
             GanarExp(10);
+
+            Console.WriteLine("--------------------");
+            Console.WriteLine("-----RESULTADOS-----");
+            Console.WriteLine($"Salud: {Salud} ==> {Salud}");
+            Console.WriteLine($"Nivel: {niv} ==> {Nivel}");
+            Console.WriteLine($"Exp: {exp}/{niv * 100} ==> {Experiencia}/{Nivel * 100}");
+            Console.WriteLine($"Fuerza: {fuer} ==> {Fuerza}");
+            Console.WriteLine($"Velocidad: {velo} ==> {Velocidad}");
+            Console.WriteLine($"Destreza: {dest} ==> {Destreza}");
+            Console.WriteLine($"Armadura: {armad} ==> {Armadura}");
+            Console.WriteLine("--------------------");
+
             Console.WriteLine("Entrenamiento completo. Estadísticas mejoradas.");
-            Console.WriteLine("Presiona cualquier tecla para continuar...                        ");
+            Console.WriteLine("Presiona enter para continuar...                        ");
+            FuncionesPartida.LimpiarBuffer();
             Console.ReadKey();
         }
 
@@ -96,7 +119,7 @@ namespace Protagonista
             Console.WriteLine("----ESTADISTICAS----");
             Console.WriteLine($"Salud: {Salud}");
             Console.WriteLine($"Nivel: {Nivel}");
-            Console.WriteLine($"Exp: {Experiencia}/{nivel*100}");
+            Console.WriteLine($"Exp: {Experiencia}/{nivel * 100}");
             Console.WriteLine($"Fuerza: {Fuerza}");
             Console.WriteLine($"Velocidad: {Velocidad}");
             Console.WriteLine($"Destreza: {Destreza}");

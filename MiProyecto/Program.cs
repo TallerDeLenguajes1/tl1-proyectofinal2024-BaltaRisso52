@@ -4,14 +4,26 @@ using Mazmorras;
 using Funciones;
 using Partida;
 using Historial;
+using Monstruos;
+
+
+// Monstruo goblin1 = new Monstruo(Tipos.ReyDemonio);
+// Personaje personaje = new Personaje("balta");
+// goblin1.MostrarCaracteristicas();
+// personaje.MostrarCaracteristicas();
+// Console.ReadKey();
+// bool combate = Mazmorra.Combate(personaje, goblin1);
+// Console.ReadKey();
 
 // MOSTRAR LA INTRODUCCION DEJ JUEGO
 FuncionesPartida.MostrarIntro();
 
 
+
 bool salir = false;
 while (!salir)
 {
+    FuncionesPartida.LimpiarBuffer();
     Console.WriteLine("╔════════════════════════════════════════════╗");
     Console.WriteLine("║--------------------MENU--------------------║");
     Console.WriteLine("╠════════════════════════════════════════════╣");
@@ -31,7 +43,7 @@ while (!salir)
             Personaje jugador = FuncionesPersonaje.CrearPersonaje();
 
             Console.WriteLine();
-            // CREO UNA LISTA DE 10 MAZMORRAS
+            // CREO UNA LISTA DE 11 MAZMORRAS
             List<Mazmorra> mazmorras = await FuncionesMazmorra.CrearLista11Mazmorras();
 
             Console.Clear();
@@ -42,28 +54,33 @@ while (!salir)
         case "2":
             Console.Clear();
 
-            Console.Write("Ingrese el nombre de su partida: ");
-            string nombre = Console.ReadLine();
-            string rutaRelativa = @"..\Partidas Guardadas";
-            string rutaAbsolutaCarpeta = Path.GetFullPath(rutaRelativa);
-            string rutaAbsolutaArchivo = Path.Combine(rutaAbsolutaCarpeta, nombre + ".json");
-            if (File.Exists(rutaAbsolutaArchivo))
+
+            if (PartidaJson.MostrarNombreDePartidasGuardadas())
             {
-                PartidaJson partida = PartidaJson.CargarPartida(nombre);
-                
-                if (partida != null)
+                Console.Write("Ingrese el nombre de su partida: ");
+                string nombre = Console.ReadLine();
+                string rutaRelativa = @"..\Partidas Guardadas";
+                string rutaAbsolutaCarpeta = Path.GetFullPath(rutaRelativa);
+                string rutaAbsolutaArchivo = Path.Combine(rutaAbsolutaCarpeta, nombre + ".json");
+                if (File.Exists(rutaAbsolutaArchivo))
                 {
-                    Console.WriteLine("Partida cargada exitosamente!!!");
-                    Console.WriteLine("---DATOS DE LA PARTIDA---");
-                    partida.Personaje.MostrarCaracteristicas();
-                    Console.WriteLine($"Cantidad de mazmorras conquistadas: {11 - partida.Mazmorras.Count}");
-                    FuncionesPartida.Menu(partida.Personaje, partida.Mazmorras);
+                    PartidaJson partida = PartidaJson.CargarPartida(nombre);
+
+                    if (partida != null)
+                    {
+                        Console.WriteLine("Partida cargada exitosamente!!!");
+                        Console.WriteLine("---DATOS DE LA PARTIDA---");
+                        partida.Personaje.MostrarCaracteristicas();
+                        Console.WriteLine($"Cantidad de mazmorras conquistadas: {11 - partida.Mazmorras.Count}");
+                        FuncionesPartida.Menu(partida.Personaje, partida.Mazmorras);
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("El nombre ingresado no coincide con una partida guardada.");
                 }
             }
-            else
-            {
-                Console.WriteLine("El nombre ingresa do no coincide con una partida guardada.");
-            }
+
             break;
 
         case "3":

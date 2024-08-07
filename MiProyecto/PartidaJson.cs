@@ -30,10 +30,9 @@ namespace Partida
 
                 // si el nombre del archivo está vacío lanzo la excepcion
                 // y la agarro en el catch
-                // asi como tu mamá me agarra esta
                 if (string.IsNullOrWhiteSpace(nombreArchivo))
                 {
-                    throw new Exception($"el nombre de archivo no puede estar vacío");
+                    throw new Exception($"El nombre de archivo no puede estar vacío");
                 }
 
                 if (!Directory.Exists(rutaAbsolutaCarpeta))
@@ -50,9 +49,9 @@ namespace Partida
             }
             catch (Exception e)
             {
-                System.Console.WriteLine($"Ha ocurrido un error guardando la partida: {e.Message}");
+                Console.WriteLine($"Ha ocurrido un error guardando la partida: {e.Message}");
             }
-            
+
 
         }
 
@@ -69,13 +68,55 @@ namespace Partida
                 PartidaJson partida = JsonSerializer.Deserialize<PartidaJson>(json);
 
                 return partida;
-            } 
+            }
             catch (Exception e)
             {
                 System.Console.WriteLine($"Ha ocurrido un error leyendo la partida: {e.Message}");
                 return null;
             }
         }
-        
+
+        public static bool MostrarNombreDePartidasGuardadas()
+        {
+
+            // Ruta de la carpeta que deseas explorar
+            string rutaRelativa = @"..\Partidas Guardadas";
+
+
+            try
+            {
+                string rutaAbsolutaCarpeta = Path.GetFullPath(rutaRelativa);
+
+                if (Directory.Exists(rutaAbsolutaCarpeta))
+                {
+                    // Obtener todos los nombres de archivo en la carpeta
+                    string[] archivos = Directory.GetFiles(rutaAbsolutaCarpeta);
+
+                    // Mostrar los nombres de los archivos
+                    Console.WriteLine($"Partidas Guardadas:");
+                    int n = 1;
+                    foreach (string archivo in archivos)
+                    {
+
+                        Console.WriteLine($"{n}: "+ Path.GetFileNameWithoutExtension(archivo)); // Obtener solo el nombre del archivo sin la extensión
+                        n++;
+                    }
+                    return true;
+                }else
+                {
+                    Console.WriteLine("Aun no hay partidas guardadas");
+                    return false;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error al leer archivos: {ex.Message}");
+                return false;
+            }
+
+
+        }
+
     }
 }

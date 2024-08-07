@@ -19,7 +19,7 @@ namespace Funciones
       //Retorna true si la cadena es null, una cadena vacía ("") o contiene solo caracteres de espacio en blanco (' '), y false en cualquier otro caso.
       while (string.IsNullOrWhiteSpace(nombre) || nombre.Length > 25)
       {
-        Console.Write("El nombre no puede ser vacio y no debe superar los 25 caracteres.");
+        Console.WriteLine("El nombre no puede ser vacio y no debe superar los 25 caracteres.");
         Console.Write("Antes de comenzar, por favor ingresa el nombre de tu personaje: ");
         nombre = Console.ReadLine();
       }
@@ -100,6 +100,7 @@ namespace Funciones
         Console.Write(item);
         Thread.Sleep(1);
       }
+      LimpiarBuffer();
       Console.ReadKey();
       Console.Clear();
 
@@ -110,7 +111,7 @@ namespace Funciones
       bool salir = false;
       while (!salir)
       {
-
+        LimpiarBuffer();
         Console.WriteLine("╔════════════════════════════════════════════╗");
         Console.WriteLine("║--------------------MENU--------------------║");
         Console.WriteLine("╠════════════════════════════════════════════╣");
@@ -152,9 +153,11 @@ namespace Funciones
               {
                 personaje.Salud = 1;
               }
-              Console.WriteLine($"numero de mazmorras: {mazmorras.Count}");
+              Console.WriteLine($"Numero de mazmorras restantes: {mazmorras.Count}");
               if (mazmorras.Count == 0)
               {
+                LimpiarBuffer();
+                Console.WriteLine("Presione enter para continuar...");
                 FelicitarJugador(personaje);
                 HistorialJson.AgregarHistorialDeGanadores(personaje);
               }
@@ -213,6 +216,15 @@ namespace Funciones
 
     }
 
+    public static void LimpiarBuffer()
+    {
+
+      while (Console.KeyAvailable)
+      {
+        Console.ReadKey(true);
+      }
+
+    }
   }
 
   public static class FuncionesMazmorra
@@ -239,6 +251,11 @@ namespace Funciones
 
         var nombre = await Mazmorra.NombreMazmorraAsync(); // PARA EL NOMBRE DE LA MAZMORRA DESDE UNA API
 
+        if (nombre.name == "Mazmorra") // NOMBRE DE LA MAZMORRA GENERICO
+        {
+          nombre.name = "Mazmorra " + (i+1);
+        }
+
         Mazmorra mazmorra = new Mazmorra(nombre.name, monstruos, jefe); // CONSTRUCTOR DE MAZMORRA
 
         mazmorras.Add(mazmorra); // AGREGO LA MAZMORRA A LA LISTA
@@ -254,6 +271,7 @@ namespace Funciones
       }
       Console.WriteLine("LISTO!!");
       Console.WriteLine("Presione enter para continuar...");
+      FuncionesPartida.LimpiarBuffer();
       Console.ReadKey();
 
       return mazmorras;
@@ -519,7 +537,7 @@ namespace Funciones
         #@+  +@#:        #%*                                                                 +=:::-         =-.:=                     
         .@@+  =++         #@%:                                                              +=:::-         =-.:=                         
                                                                                                                                 ");
-      Thread.Sleep(150);
+      Thread.Sleep(100);
       Console.SetCursorPosition(cursorLeft, cursorTop);
       Console.WriteLine(@$"        SALUD: <<{monstruo.Salud}>>                                               SALUD: <<{jugador.Salud}>>         
                                                                                                                                              
@@ -550,7 +568,7 @@ namespace Funciones
         .@@+  =++         #@%:                                                              +=:::-         =-.:=                                            
                                                                                                                                            ");
 
-      Thread.Sleep(150);
+      Thread.Sleep(100);
       Console.SetCursorPosition(cursorLeft, cursorTop);
       Console.WriteLine(@$"        SALUD: <<{monstruo.Salud}>>                                               SALUD: <<{jugador.Salud}>>         
                                                                                                                                               
@@ -581,7 +599,7 @@ namespace Funciones
         .@@+  =++         #@%:                                                              +=:::-         =-.:=                                               
                                                                                                                                    ");
 
-      Thread.Sleep(150);
+      Thread.Sleep(100);
       Console.SetCursorPosition(cursorLeft, cursorTop);
       Console.WriteLine(@$"        SALUD: <<{monstruo.Salud}>>                                               SALUD: <<{jugador.Salud}>>         
                                                                                                                                                  
@@ -612,7 +630,7 @@ namespace Funciones
         .@@+  =++         #@%:                                                              +=:::-         =-.:=                                                 
                                                                                                                                   ");
 
-      Thread.Sleep(150);
+      Thread.Sleep(100);
       Console.SetCursorPosition(cursorLeft, cursorTop);
 
       if (saludJugadorDespuesDeAtaque == 0)
