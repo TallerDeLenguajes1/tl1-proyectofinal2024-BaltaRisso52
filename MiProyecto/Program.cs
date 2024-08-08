@@ -4,16 +4,6 @@ using Mazmorras;
 using Funciones;
 using Partida;
 using Historial;
-using Monstruos;
-
-
-// Monstruo goblin1 = new Monstruo(Tipos.ReyDemonio);
-// Personaje personaje = new Personaje("balta");
-// goblin1.MostrarCaracteristicas();
-// personaje.MostrarCaracteristicas();
-// Console.ReadKey();
-// bool combate = Mazmorra.Combate(personaje, goblin1);
-// Console.ReadKey();
 
 // MOSTRAR LA INTRODUCCION DEJ JUEGO
 FuncionesPartida.MostrarIntro();
@@ -55,14 +45,14 @@ while (!salir)
             Console.Clear();
 
 
-            if (PartidaJson.MostrarNombreDePartidasGuardadas())
+            if (PartidaJson.MostrarNombreDePartidasGuardadas()) // Se encarga de mostrar las partidas guardadas y en el caso de que existan permite ingresar nombre.
             {
                 Console.Write("Ingrese el nombre de su partida: ");
                 string nombre = Console.ReadLine();
                 string rutaRelativa = @"..\Partidas Guardadas";
                 string rutaAbsolutaCarpeta = Path.GetFullPath(rutaRelativa);
                 string rutaAbsolutaArchivo = Path.Combine(rutaAbsolutaCarpeta, nombre + ".json");
-                if (File.Exists(rutaAbsolutaArchivo))
+                if (File.Exists(rutaAbsolutaArchivo)) // si existe el archivo comienza el juego
                 {
                     PartidaJson partida = PartidaJson.CargarPartida(nombre);
 
@@ -70,6 +60,9 @@ while (!salir)
                     {
                         Console.WriteLine("Partida cargada exitosamente!!!");
                         Console.WriteLine("---DATOS DE LA PARTIDA---");
+                        Console.WriteLine($"Nombre del Personaje: {partida.Personaje.Datos.Nombre}");
+                        Console.WriteLine($"Edad: {partida.Personaje.Datos.Edad}");
+                        Console.WriteLine($"Fecha de nacimiento: {partida.Personaje.Datos.Fechanac}");
                         partida.Personaje.MostrarCaracteristicas();
                         Console.WriteLine($"Cantidad de mazmorras conquistadas: {11 - partida.Mazmorras.Count}");
                         FuncionesPartida.Menu(partida.Personaje, partida.Mazmorras);

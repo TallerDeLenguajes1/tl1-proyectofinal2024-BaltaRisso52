@@ -27,6 +27,8 @@ namespace Funciones
       Personaje jugador = new Personaje(nombre);
 
       Console.WriteLine($"¡Bienvenido, {nombre}! Tus estadísticas iniciales son:");
+      Console.WriteLine($"Edad: {jugador.Datos.Edad}");
+      Console.WriteLine($"Fecha de nacimiento: {jugador.Datos.Fechanac}");
       jugador.MostrarCaracteristicas();
 
       return jugador;
@@ -151,7 +153,7 @@ namespace Funciones
               }
               else
               {
-                personaje.Salud = 1;
+                personaje.Estadisticas.Salud1();
               }
               Console.WriteLine($"Numero de mazmorras restantes: {mazmorras.Count}");
               if (mazmorras.Count == 0)
@@ -170,7 +172,7 @@ namespace Funciones
             Console.WriteLine("------------------------");
             Console.WriteLine("Salud restaurada al 100%");
             Console.WriteLine("------------------------");
-            personaje.Salud = 100;
+            personaje.Estadisticas.Salud100(); // Salud al 100%
             break;
 
           case "5":
@@ -205,9 +207,9 @@ namespace Funciones
      ##       ##       ##   #     ##    ###         ##     ##  ##   # ####   ##  ##   ##           ##  
      ##       ##  ##   ##  ##     ##     ##   #     ##     ## ##    #   ##   ## ##    ##  ##   ##  ##  
     ####      #  ###  #######    ####     # ###    ####    #  #    ### ###   #  #     #  ###   ## ##   ");
-      Console.WriteLine($"¡Felicitaciones, {jugador.Nombre}!");
+      Console.WriteLine($"¡Felicitaciones, {jugador.Datos.Nombre}!");
       Console.WriteLine("¡Has completado el juego con gran éxito!");
-      Console.WriteLine($"Nivel Alcanzado: {jugador.Nivel}");
+      Console.WriteLine($"Nivel Alcanzado: {jugador.Estadisticas.Nivel}");
       Console.WriteLine("Tu dedicación y habilidades te han llevado a la victoria.");
       Console.WriteLine("¡Esperamos que hayas disfrutado la aventura tanto como nosotros disfrutamos creando este juego para ti!");
       Console.WriteLine("¡Gracias por jugar!");
@@ -253,7 +255,7 @@ namespace Funciones
 
         if (nombre.name == "Mazmorra") // NOMBRE DE LA MAZMORRA GENERICO
         {
-          nombre.name = "Mazmorra " + (i+1);
+          nombre.name = "Mazmorra " + (i + 1);
         }
 
         Mazmorra mazmorra = new Mazmorra(nombre.name, monstruos, jefe); // CONSTRUCTOR DE MAZMORRA
@@ -363,7 +365,7 @@ namespace Funciones
       {
         saludMonstruoDespuesDeAtaque = 0;
       }
-      Console.WriteLine(@$"        SALUD: <<{monstruo.Salud}>>                                               SALUD: <<{jugador.Salud}>>         
+      Console.WriteLine(@$"        SALUD: <<{monstruo.Salud}>>                                               SALUD: <<{jugador.Estadisticas.Salud}>>         
                                                                                                                                                                            
                                                                                                                                                                
                                                                                                                                                             
@@ -396,7 +398,7 @@ namespace Funciones
       Console.SetCursorPosition(cursorLeft, cursorTop);
 
 
-      Console.WriteLine(@$"        SALUD: <<{monstruo.Salud}>>                                               SALUD: <<{jugador.Salud}>>         
+      Console.WriteLine(@$"        SALUD: <<{monstruo.Salud}>>                                               SALUD: <<{jugador.Estadisticas.Salud}>>         
                                                                                              _         
                                                                                           -*#=|          
                                                                                        -*%+.               
@@ -430,7 +432,7 @@ namespace Funciones
 
       if (saludMonstruoDespuesDeAtaque == 0)
       {
-        Console.WriteLine(@$"        SALUD: <<{saludMonstruoDespuesDeAtaque}>>                                               SALUD: <<{jugador.Salud}>>         
+        Console.WriteLine(@$"        SALUD: <<{saludMonstruoDespuesDeAtaque}>>                                               SALUD: <<{jugador.Estadisticas.Salud}>>         
                                                                                                                                   
                                                                                                                             
                                                                                                                             
@@ -461,7 +463,7 @@ namespace Funciones
       }
       else
       {
-        Console.WriteLine(@$"        SALUD: <<{saludMonstruoDespuesDeAtaque}>>                                               SALUD: <<{jugador.Salud}>>         
+        Console.WriteLine(@$"        SALUD: <<{saludMonstruoDespuesDeAtaque}>>                                               SALUD: <<{jugador.Estadisticas.Salud}>>         
                                                                                                                                   
                                                                                                                             
                                                                                                                             
@@ -504,12 +506,12 @@ namespace Funciones
       Thread.Sleep(300);
       int cursorLeft = Console.CursorLeft;
       int cursorTop = Console.CursorTop;
-      int saludJugadorDespuesDeAtaque = jugador.Salud - danioMonstruo;
+      int saludJugadorDespuesDeAtaque = jugador.Estadisticas.Salud - danioMonstruo;
       if (saludJugadorDespuesDeAtaque < 0)
       {
         saludJugadorDespuesDeAtaque = 0;
       }
-      Console.WriteLine(@$"        SALUD: <<{monstruo.Salud}>>                                               SALUD: <<{jugador.Salud}>>         
+      Console.WriteLine(@$"        SALUD: <<{monstruo.Salud}>>                                               SALUD: <<{jugador.Estadisticas.Salud}>>         
                                                                                                                                                                                                                                       
                                                                                                                                     
                                                                                                                                     
@@ -539,7 +541,7 @@ namespace Funciones
                                                                                                                                 ");
       Thread.Sleep(100);
       Console.SetCursorPosition(cursorLeft, cursorTop);
-      Console.WriteLine(@$"        SALUD: <<{monstruo.Salud}>>                                               SALUD: <<{jugador.Salud}>>         
+      Console.WriteLine(@$"        SALUD: <<{monstruo.Salud}>>                                               SALUD: <<{jugador.Estadisticas.Salud}>>         
                                                                                                                                              
                                                                                                                                        
                                                                                                                                        
@@ -570,7 +572,7 @@ namespace Funciones
 
       Thread.Sleep(100);
       Console.SetCursorPosition(cursorLeft, cursorTop);
-      Console.WriteLine(@$"        SALUD: <<{monstruo.Salud}>>                                               SALUD: <<{jugador.Salud}>>         
+      Console.WriteLine(@$"        SALUD: <<{monstruo.Salud}>>                                               SALUD: <<{jugador.Estadisticas.Salud}>>         
                                                                                                                                               
                                                                                                                                         
                                                                                                                                         
@@ -601,7 +603,7 @@ namespace Funciones
 
       Thread.Sleep(100);
       Console.SetCursorPosition(cursorLeft, cursorTop);
-      Console.WriteLine(@$"        SALUD: <<{monstruo.Salud}>>                                               SALUD: <<{jugador.Salud}>>         
+      Console.WriteLine(@$"        SALUD: <<{monstruo.Salud}>>                                               SALUD: <<{jugador.Estadisticas.Salud}>>         
                                                                                                                                                  
                                                                                                                                            
                                                                                                                                            

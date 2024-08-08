@@ -80,7 +80,7 @@ namespace Historial
                         {
                             
                             Console.WriteLine($"--------{n}--------");
-                            Console.WriteLine($"Nombre del personaje: {item.Nombre}");
+                            Console.WriteLine($"Nombre del personaje: {item.Datos.Nombre}");
                             item.MostrarCaracteristicas();
                             n++;
                         }

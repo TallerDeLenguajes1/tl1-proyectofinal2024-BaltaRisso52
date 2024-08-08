@@ -71,7 +71,7 @@ namespace Mazmorras
                     return false;
                 }
                 FuncionesPartida.LimpiarBuffer();
-                Console.WriteLine($"Salud luego del combate: {personaje.Salud}");
+                Console.WriteLine($"Salud luego del combate: {personaje.Estadisticas.Salud}");
                 Console.WriteLine("Presione una tecla para el siguiente combate...");
                 Console.ReadKey();
 
@@ -82,7 +82,7 @@ namespace Mazmorras
             Console.WriteLine("RECOMPENSA: SALUD AL 100%");
             Console.WriteLine("Presione una tecla para pelear con el jefe...");
             Console.ReadKey();
-            personaje.Salud = 100;
+            personaje.Estadisticas.Salud100(); // salud al 100%
             if (!Combate(personaje, Jefe))
             {
                 foreach (var item in Monstruos)
@@ -100,8 +100,8 @@ namespace Mazmorras
         public static bool Combate(Personaje jugador, Monstruo monstruo)
         {
             Random random = new Random();
-            int ataqueJugador = jugador.Destreza * jugador.Fuerza * jugador.Nivel;
-            int defensaJugador = jugador.Armadura * jugador.Velocidad;
+            int ataqueJugador = jugador.Estadisticas.Destreza * jugador.Estadisticas.Fuerza * jugador.Estadisticas.Nivel;
+            int defensaJugador = jugador.Estadisticas.Armadura * jugador.Estadisticas.Velocidad;
             int ataqueMonstruo = monstruo.Destreza * monstruo.Fuerza * monstruo.Nivel;
             int defensaMonstruo = monstruo.Armadura * monstruo.Velocidad;
             Console.Clear();
@@ -123,15 +123,15 @@ namespace Mazmorras
             Console.Clear();
             Console.WriteLine($"<<<---APARECE UN {monstruo.Tipo}, CUIDADO!--->>>");
 
-            while (jugador.Salud > 0 && monstruo.Salud > 0)
+            while (jugador.Estadisticas.Salud > 0 && monstruo.Salud > 0)
             {
-                if (jugador.Velocidad >= monstruo.Velocidad)
+                if (jugador.Estadisticas.Velocidad >= monstruo.Velocidad)
                 {
                     int efectividadJugador = random.Next(1, 101);
                     int danioJugador = (ataqueJugador * efectividadJugador / 500 ) - defensaMonstruo;
                     if (danioJugador < 0)
                     {
-                        danioJugador = 0;
+                        danioJugador = 2;
                     }
 
                     if (respuesta == "2")
@@ -152,21 +152,21 @@ namespace Mazmorras
                 int danioMonstruo = (ataqueMonstruo * efectividadMonstruo / 500 ) - defensaJugador;
                 if (danioMonstruo < 0)
                 {
-                    danioMonstruo = 0;
+                    danioMonstruo = 1;
                 }
                 if (respuesta == "2")
                 {
                     FuncionesMazmorra.EfectoCombateMonstruo(jugador, monstruo, danioMonstruo);
                 }
 
-                jugador.Salud -= danioMonstruo;
-                if (jugador.Salud <= 0)
+                jugador.Estadisticas.ModificarEstadisticas(0,0,0,0,0, -danioMonstruo, 0);
+                if (jugador.Estadisticas.Salud <= 0)
                 {
-                    Console.WriteLine($"{jugador.Nombre} ha sido derrotado.");
+                    Console.WriteLine($"{jugador.Datos.Nombre} ha sido derrotado.");
                     return false;
                 }
 
-                if (jugador.Velocidad < monstruo.Velocidad)
+                if (jugador.Estadisticas.Velocidad < monstruo.Velocidad)
                 {
                     int efectividadJugador = random.Next(1, 101);
                     int danioJugador = (ataqueJugador * efectividadJugador / 500 ) - defensaMonstruo;

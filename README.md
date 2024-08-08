@@ -1,6 +1,10 @@
-# Solo Leveling
+# Solo Leveling: La Ascencion del Cazador!
 
-Es un juego de rol basado en la popular serie de anime "Solo Leveling", que solo tiene en cuenta lo basico.
+"Solo Leveling" es un emocionante juego de rol inspirado en la popular serie de anime y manhwa "Solo Leveling". Los jugadores se sumergen en un mundo repleto de mazmorras misteriosas, enfrentándose a desafíos formidables y criaturas temibles mientras buscan convertirse en el cazador más poderoso.
+
+# Historia y Objetivo
+
+En un universo donde las mazmorras han emergido repentinamente, solo los cazadores como tú poseen la habilidad para explorar estos lugares peligrosos. Comenzando como un principiante humilde, tu objetivo es superar cada desafío y ascender hasta convertirte en el cazador más fuerte de todos.
 
 - [Menu Principal](#menu-principal)
 - [Nueva Partida](#nueva-partida)
@@ -25,8 +29,7 @@ Es un juego de rol basado en la popular serie de anime "Solo Leveling", que solo
 
 ## Nueva Partida
 
-    Al iniciar por primera vez el juego se debe ingresar el nombre de su personaje. Luego se realiza el consumo de API, dando nombres a las mazmorras del juego, si llega a ocurrir algun tipo de error, las mazmorras tendran nombres genericos, ejemplo: mazmorra1, mazmorra2, etc... 
-    Luego comienza el juego y aparece el menu secundario.
+    Al iniciar una nueva partida, debes ingresar el nombre de tu personaje. A continuación, se realiza una llamada a una API externa para generar nombres únicos y temáticos para las mazmorras del juego. Si ocurre algún error durante esta llamada, se asignarán nombres genéricos, como "Mazmorra1", "Mazmorra2", etc. Tras esto, el juego comienza y se despliega el Menú Secundario.
 
 ## Menu Secundario
 
@@ -39,46 +42,41 @@ Es un juego de rol basado en la popular serie de anime "Solo Leveling", que solo
 
 ### Mostrar Estadisticas
 
-    Esta opcion muestra las estadisticas del jugador conseguidas hasta el momento.
+    Esta opción permite visualizar las estadísticas acumuladas del personaje a lo largo del juego.
 
 ### Entrenar
 
-    Esta opcion permite al jugador mejorar sus estadisticas por medio de un entrenamiento.
+   Mediante esta opción, puedes mejorar las estadísticas de tu personaje a través de diferentes entrenamientos.
 
 ### Entrar a una Mazmorra
 
-    Esta opcion lleva directamente al jugador a una mazmorra, donde se encontrara con monstruos y debera combatir con cada uno de ellos para poder superarla.
+    Seleccionando esta opción, tu personaje ingresará a una mazmorra, donde deberá enfrentarse a monstruos y otros peligros para superarla.
 
 ### Tomar pocion para la Salud
 
-    En ocasiones el jugador podria perder algun combate contra monstruos, lo cual hace que no supere la mazmorra y su vida sea la minima, ante esta situacion, la opcion es ideal para recuperar la vida al 100%.
+    Si pierdes un combate y tu salud se reduce al mínimo, esta opción te permite restaurar la salud de tu personaje al 100%.
 
 ### Guardar Partida
 
-    Esta opcion permite guardar el avance de la partida y seguir en otro momento, y se debe ingresar un nombre con el cual se identificara la partida.
+    Guarda tu progreso ingresando un nombre para identificar tu partida, permitiéndote continuar en otro momento.
 
 ### Volver
 
-    Una vez se elige esta opcion se perdera el avance de la partida si no fue guardada y volvera al menu principal.
+    Si eliges esta opción sin haber guardado, perderás tu progreso y regresarás al Menú Principal.
 
 ## Cargar Partida
 
-    En el caso de que existan partidas guardadas, mostrara cuales son y permitira ingresar el nombre de su partida. Si la carga se hace correctamente, aparecera los datos y caracteristicas de la partida, luego empezara el juego en el menu secundario.
-    En el caso de que no existan, mostrara un mensaje de que no hay partidas guardadas.
+    Si existen partidas guardadas, se mostrará una lista y podrás ingresar el nombre de la partida que deseas cargar. Si la carga es exitosa, el juego continuará desde el Menú Secundario con los datos de la partida seleccionada. Si no existen partidas guardadas, se mostrará un mensaje indicando tal situación.
 
 ## Historial de Ganadores
 
-    Aqui se mostrara los ganadores del juego en el caso de existir.
+    Aquí se registran los jugadores que han completado el juego con éxito.
 
 ## Salir
 
-    Esta opcion permite salir del juego.
+    Esta opción cierra el juego.
 
 
+## API utilizada
 
-
-    
-
-
-
-
+    Para dar un toque de fantasía a los nombres de las mazmorras, el juego utiliza una API pública de Star Wars que provee nombres únicos de planetas. La API se consulta utilizando la siguiente URL: [https://swapi.dev/api/planets/{numero}/?format=json](https://swapi.dev/api/planets/{1}/?format=json). Aquí, {numero} es un valor que varía para obtener diferentes nombres, con un máximo de 60 nombres disponibles. En caso de que la API no funcione correctamente, se generarán nombres genéricos para las mazmorras.

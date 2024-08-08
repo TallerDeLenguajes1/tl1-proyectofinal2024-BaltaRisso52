@@ -87,7 +87,7 @@ namespace Partida
             {
                 string rutaAbsolutaCarpeta = Path.GetFullPath(rutaRelativa);
 
-                if (Directory.Exists(rutaAbsolutaCarpeta))
+                if (Directory.Exists(rutaAbsolutaCarpeta)) // verifica la existencia de la carpeta
                 {
                     // Obtener todos los nombres de archivo en la carpeta
                     string[] archivos = Directory.GetFiles(rutaAbsolutaCarpeta);
@@ -104,7 +104,7 @@ namespace Partida
                     return true;
                 }else
                 {
-                    Console.WriteLine("Aun no hay partidas guardadas");
+                    Console.WriteLine("Aun no hay partidas guardadas"); // en el caso de que no exista la carpeta, muestra este msj
                     return false;
                 }
 

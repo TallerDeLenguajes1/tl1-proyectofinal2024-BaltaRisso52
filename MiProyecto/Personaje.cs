@@ -2,11 +2,27 @@ using Funciones;
 
 namespace Protagonista
 {
-    public class Personaje
+
+    public class Datos
     {
         private string nombre;
         private DateTime fechanac;
         private int edad;
+
+        public Datos(string nombre, DateTime fechanac, int edad)
+        {
+            this.nombre = nombre;
+            this.fechanac = fechanac;
+            this.edad = edad;
+        }
+
+        public string Nombre { get => nombre; }
+        public DateTime Fechanac { get => fechanac; }
+        public int Edad { get => edad; }
+    }
+
+    public class Estadisticas
+    {
         private int velocidad;
         private int destreza;
         private int fuerza;
@@ -15,54 +31,96 @@ namespace Protagonista
         private int salud;
         private int experiencia;
 
-        public string Nombre { get => nombre; set => nombre = value; }
-        public DateTime Fechanac { get => fechanac; set => fechanac = value; }
-        public int Edad { get => edad; set => edad = value; }
-        public int Velocidad { get => velocidad; set => velocidad = value; }
-        public int Destreza { get => destreza; set => destreza = value; }
-        public int Fuerza { get => fuerza; set => fuerza = value; }
-        public int Nivel { get => nivel; set => nivel = value; }
-        public int Armadura { get => armadura; set => armadura = value; }
-        public int Salud { get => salud; set => salud = (value < 0) ? 0 : value; }
+        public Estadisticas(int velocidad, int destreza, int fuerza, int nivel, int armadura, int salud, int experiencia)
+        {
+            this.velocidad = velocidad;
+            this.destreza = destreza;
+            this.fuerza = fuerza;
+            this.nivel = nivel;
+            this.armadura = armadura;
+            this.salud = salud;
+            this.experiencia = experiencia;
+        }
+
+        public void ModificarEstadisticas(int velocidad, int destreza, int fuerza, int nivel, int armadura, int salud, int experiencia)
+        {
+
+            this.velocidad = Velocidad + velocidad;
+            this.destreza = Destreza + destreza;
+            this.fuerza = Fuerza + fuerza;
+            this.nivel = Nivel + nivel;
+            this.armadura = Armadura + armadura;
+            if (this.salud + salud < 0)
+            {
+                this.salud = 0;
+            }
+            else
+            {
+                this.salud = Salud + salud;
+            }
+
+            this.experiencia = Experiencia + experiencia;
+        }
+
+        public void Salud100()
+        {
+            salud = 100;
+        }
+
+        public void Salud1()
+        {
+            salud = 1;
+        }
+
+        public int Experiencia { get => experiencia; }
+        public int Velocidad { get => velocidad; }
+        public int Destreza { get => destreza; }
+        public int Fuerza { get => fuerza; }
+        public int Nivel { get => nivel; }
+        public int Armadura { get => armadura; }
+        public int Salud { get => salud; }
+    }
+    public class Personaje
+    {
+        private Datos datos;
+        private Estadisticas estadisticas;
+        private int experiencia;
+
         public int Experiencia { get => experiencia; set => experiencia = value; }
+        public Datos Datos { get => datos; }
+        public Estadisticas Estadisticas { get => estadisticas; }
 
         public Personaje(string Nombre)
         {
-            this.Nombre = Nombre;
             Random random = new Random();
-            Edad = random.Next(18, 31);
+            int edad = random.Next(18, 31);
             DateTime hoy = DateTime.Today; // obtener la fecha actual
-            int anioNac = hoy.Year - Edad; // anio de nacimiento
+            int anioNac = hoy.Year - edad; // anio de nacimiento
             int dia = random.Next(1, 366); // numero aleatorio para el dia de nacimiento
-            Fechanac = new DateTime(anioNac, 1, 1).AddDays(dia - 1);
+            DateTime fechanac = new DateTime(anioNac, 1, 1).AddDays(dia - 1);
 
-            Salud = 100;
-            Velocidad = random.Next(1, 6);
-            Destreza = random.Next(2, 5);
-            Fuerza = random.Next(2, 8);
-            Nivel = random.Next(2, 8);
-            Armadura = random.Next(1, 6);
-            Experiencia = 0;
+            datos = new Datos(Nombre, fechanac, edad);
+
+            estadisticas = new Estadisticas(random.Next(1, 6), random.Next(2, 5), random.Next(2, 8), 1, random.Next(1, 6), 100, 0);
         }
 
         public void GanarExp(int ExpGanada)
         {
-            Experiencia += ExpGanada;
+            Estadisticas.ModificarEstadisticas(0, 0, 0, 0, 0, 0, ExpGanada);
 
-            int ExpParaSigNivel = Nivel * 100;
+            int ExpParaSigNivel = Estadisticas.Nivel * 100;
 
-            if (Experiencia >= ExpParaSigNivel)
+            if (Estadisticas.Experiencia >= ExpParaSigNivel)
             {
-                Nivel++;
-                Experiencia -= ExpParaSigNivel;
-                Console.WriteLine($"***HAS ALCANZADO EL NIVEL ===>{Nivel}<===***");
+                Estadisticas.ModificarEstadisticas(0, 0, 0, 1, 0, 0, -ExpParaSigNivel);
+                Console.WriteLine($"***HAS ALCANZADO EL NIVEL ===>{Estadisticas.Nivel}<===***");
             }
         }
 
         public void Entrenar()
         {
             Console.Clear();
-            Console.Write($"{Nombre} está entrenando");
+            Console.Write($"{Datos.Nombre} está entrenando");
             int cursorLeft = Console.CursorLeft;
             int cursorTop = Console.CursorTop;
             string text = "...";
@@ -78,31 +136,29 @@ namespace Protagonista
                 Console.SetCursorPosition(cursorLeft, cursorTop);
             }
 
-            int velo = Velocidad;
-            int dest = Destreza;
-            int fuer = Fuerza;
-            int armad = Armadura;
-            int niv = Nivel;
-            int exp = Experiencia;
+            int velo = Estadisticas.Velocidad;
+            int dest = Estadisticas.Destreza;
+            int fuer = Estadisticas.Fuerza;
+            int armad = Estadisticas.Armadura;
+            int niv = Estadisticas.Nivel;
+            int exp = Estadisticas.Experiencia;
 
             Random random = new Random();
-            Velocidad += random.Next(1, 4);
-            Destreza += random.Next(1, 4);
-            Fuerza += random.Next(1, 4);
-            Armadura += random.Next(1, 4);
+
+            Estadisticas.ModificarEstadisticas(random.Next(1, 4), random.Next(1, 4), random.Next(1, 4), 0, random.Next(1, 4), 0, 0);
 
             Console.WriteLine();
             GanarExp(10);
 
             Console.WriteLine("--------------------");
             Console.WriteLine("-----RESULTADOS-----");
-            Console.WriteLine($"Salud: {Salud} ==> {Salud}");
-            Console.WriteLine($"Nivel: {niv} ==> {Nivel}");
-            Console.WriteLine($"Exp: {exp}/{niv * 100} ==> {Experiencia}/{Nivel * 100}");
-            Console.WriteLine($"Fuerza: {fuer} ==> {Fuerza}");
-            Console.WriteLine($"Velocidad: {velo} ==> {Velocidad}");
-            Console.WriteLine($"Destreza: {dest} ==> {Destreza}");
-            Console.WriteLine($"Armadura: {armad} ==> {Armadura}");
+            Console.WriteLine($"Salud: {Estadisticas.Salud} ==> {Estadisticas.Salud}");
+            Console.WriteLine($"Nivel: {niv} ==> {Estadisticas.Nivel}");
+            Console.WriteLine($"Exp: {exp}/{niv * 100} ==> {Estadisticas.Experiencia}/{Estadisticas.Nivel * 100}");
+            Console.WriteLine($"Fuerza: {fuer} ==> {Estadisticas.Fuerza}");
+            Console.WriteLine($"Velocidad: {velo} ==> {Estadisticas.Velocidad}");
+            Console.WriteLine($"Destreza: {dest} ==> {Estadisticas.Destreza}");
+            Console.WriteLine($"Armadura: {armad} ==> {Estadisticas.Armadura}");
             Console.WriteLine("--------------------");
 
             Console.WriteLine("Entrenamiento completo. Estadísticas mejoradas.");
@@ -117,13 +173,13 @@ namespace Protagonista
         {
             Console.WriteLine("--------------------");
             Console.WriteLine("----ESTADISTICAS----");
-            Console.WriteLine($"Salud: {Salud}");
-            Console.WriteLine($"Nivel: {Nivel}");
-            Console.WriteLine($"Exp: {Experiencia}/{nivel * 100}");
-            Console.WriteLine($"Fuerza: {Fuerza}");
-            Console.WriteLine($"Velocidad: {Velocidad}");
-            Console.WriteLine($"Destreza: {Destreza}");
-            Console.WriteLine($"Armadura: {Armadura}");
+            Console.WriteLine($"Salud: {Estadisticas.Salud}");
+            Console.WriteLine($"Nivel: {Estadisticas.Nivel}");
+            Console.WriteLine($"Exp: {Estadisticas.Experiencia}/{Estadisticas.Nivel * 100}");
+            Console.WriteLine($"Fuerza: {Estadisticas.Fuerza}");
+            Console.WriteLine($"Velocidad: {Estadisticas.Velocidad}");
+            Console.WriteLine($"Destreza: {Estadisticas.Destreza}");
+            Console.WriteLine($"Armadura: {Estadisticas.Armadura}");
             Console.WriteLine("--------------------");
 
         }
