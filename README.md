@@ -27,11 +27,11 @@ En un universo donde las mazmorras han emergido repentinamente, solo los cazador
     - Historial de Ganadores
     - Salir
 
-# Nueva Partida
+## Nueva Partida
 
     Al iniciar una nueva partida, debes ingresar el nombre de tu personaje. A continuación, se realiza una llamada a una API externa para generar nombres únicos y temáticos para las mazmorras del juego. Si ocurre algún error durante esta llamada, se asignarán nombres genéricos, como "Mazmorra1", "Mazmorra2", etc. Tras esto, el juego comienza y se despliega el Menú Secundario.
 
-# Menu Secundario
+## Menu Secundario
 
     - Mostrar Estadisticas
     - Entrenar
@@ -40,43 +40,43 @@ En un universo donde las mazmorras han emergido repentinamente, solo los cazador
     - Guardar Partida
     - Volver
 
-# Mostrar Estadisticas
+## Mostrar Estadisticas
 
     Esta opción permite visualizar las estadísticas acumuladas del personaje a lo largo del juego.
 
-# Entrenar
+## Entrenar
 
    Mediante esta opción, puedes mejorar las estadísticas de tu personaje a través de diferentes entrenamientos.
 
-# Entrar a una Mazmorra
+## Entrar a una Mazmorra
 
     Seleccionando esta opción, tu personaje ingresará a una mazmorra, donde deberá enfrentarse a monstruos y otros peligros para superarla.
 
-# Tomar pocion para la Salud
+## Tomar pocion para la Salud
 
     Si pierdes un combate y tu salud se reduce al mínimo, esta opción te permite restaurar la salud de tu personaje al 100%.
 
-# Guardar Partida
+## Guardar Partida
 
     Guarda tu progreso ingresando un nombre para identificar tu partida, permitiéndote continuar en otro momento.
 
-# Volver
+## Volver
 
     Si eliges esta opción sin haber guardado, perderás tu progreso y regresarás al Menú Principal.
 
-# Cargar Partida
+## Cargar Partida
 
     Si existen partidas guardadas, se mostrará una lista y podrás ingresar el nombre de la partida que deseas cargar. Si la carga es exitosa, el juego continuará desde el Menú Secundario con los datos de la partida seleccionada. Si no existen partidas guardadas, se mostrará un mensaje indicando tal situación.
 
-# Historial de Ganadores
+## Historial de Ganadores
 
     Aquí se registran los jugadores que han completado el juego con éxito.
 
-# Salir
+## Salir
 
     Esta opción cierra el juego.
 
 
-# API utilizada
+## API utilizada
 
     Para dar un toque de fantasía a los nombres de las mazmorras, el juego utiliza una API pública de Star Wars que provee nombres únicos de planetas. La API se consulta utilizando la siguiente URL: [API](https://swapi.dev/api/planets/1/?format=json). (https://swapi.dev/api/planets/{numero}/?format=json) Aquí, {numero} es un valor que varía para obtener diferentes nombres, con un máximo de 60 nombres disponibles. En caso de que la API no funcione correctamente, se generarán nombres genéricos para las mazmorras.
