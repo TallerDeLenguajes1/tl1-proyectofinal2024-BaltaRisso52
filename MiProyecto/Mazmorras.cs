@@ -10,12 +10,10 @@ namespace Mazmorras
         private string nombre;
         private List<Monstruo> monstruos;
         private Monstruo jefe;
-        private bool completada;
 
         public string Nombre { get => nombre; set => nombre = value; }
         public List<Monstruo> Monstruos { get => monstruos; set => monstruos = value; }
         public Monstruo Jefe { get => jefe; set => jefe = value; }
-        public bool Completada { get => completada; set => completada = value; }
 
         public Mazmorra(string Nombre, List<Monstruo> Monstruos, Monstruo Jefe)
         {
@@ -23,7 +21,6 @@ namespace Mazmorras
             this.Nombre = Nombre;
             this.Monstruos = Monstruos;
             this.Jefe = Jefe;
-            Completada = false;
 
         }
 
@@ -92,7 +89,6 @@ namespace Mazmorras
                 Jefe.Salud = 100;
                 return false;
             }
-            Completada = true;
             Console.WriteLine($"Superaste la mazmorra {Nombre}, FELICITACIONES!!!");
             return true;
         }
@@ -129,7 +125,7 @@ namespace Mazmorras
                 {
                     int efectividadJugador = random.Next(1, 101);
                     int danioJugador = (ataqueJugador * efectividadJugador / 500 ) - defensaMonstruo;
-                    if (danioJugador < 0)
+                    if (danioJugador <= 0)
                     {
                         danioJugador = 2;
                     }
@@ -150,7 +146,7 @@ namespace Mazmorras
 
                 int efectividadMonstruo = random.Next(1, 101);
                 int danioMonstruo = (ataqueMonstruo * efectividadMonstruo / 500 ) - defensaJugador;
-                if (danioMonstruo < 0)
+                if (danioMonstruo <= 0)
                 {
                     danioMonstruo = 1;
                 }
@@ -170,9 +166,9 @@ namespace Mazmorras
                 {
                     int efectividadJugador = random.Next(1, 101);
                     int danioJugador = (ataqueJugador * efectividadJugador / 500 ) - defensaMonstruo;
-                    if (danioJugador < 0)
+                    if (danioJugador <= 0)
                     {
-                        danioJugador = 0;
+                        danioJugador = 2;
                     }
 
                     if (respuesta == "2")

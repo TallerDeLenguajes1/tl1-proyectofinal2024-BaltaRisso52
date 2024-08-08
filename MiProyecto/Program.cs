@@ -62,7 +62,8 @@ while (!salir)
                         Console.WriteLine("---DATOS DE LA PARTIDA---");
                         Console.WriteLine($"Nombre del Personaje: {partida.Personaje.Datos.Nombre}");
                         Console.WriteLine($"Edad: {partida.Personaje.Datos.Edad}");
-                        Console.WriteLine($"Fecha de nacimiento: {partida.Personaje.Datos.Fechanac}");
+                        string fecha = partida.Personaje.Datos.Fechanac.ToString("dd MMMM yyyy");
+                        Console.WriteLine($"Fecha de nacimiento: {fecha}");
                         partida.Personaje.MostrarCaracteristicas();
                         Console.WriteLine($"Cantidad de mazmorras conquistadas: {11 - partida.Mazmorras.Count}");
                         FuncionesPartida.Menu(partida.Personaje, partida.Mazmorras);

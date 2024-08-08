@@ -1,4 +1,5 @@
 using Funciones;
+using System.Text.Json.Serialization;
 
 namespace Protagonista
 {
@@ -84,11 +85,15 @@ namespace Protagonista
     {
         private Datos datos;
         private Estadisticas estadisticas;
-        private int experiencia;
-
-        public int Experiencia { get => experiencia; set => experiencia = value; }
         public Datos Datos { get => datos; }
         public Estadisticas Estadisticas { get => estadisticas; }
+
+        [JsonConstructor]
+        public Personaje(Datos datos, Estadisticas estadisticas)
+        {
+            this.datos = datos;
+            this.estadisticas = estadisticas;
+        }
 
         public Personaje(string Nombre)
         {

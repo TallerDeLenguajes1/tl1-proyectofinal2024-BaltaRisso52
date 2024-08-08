@@ -28,7 +28,8 @@ namespace Funciones
 
       Console.WriteLine($"¡Bienvenido, {nombre}! Tus estadísticas iniciales son:");
       Console.WriteLine($"Edad: {jugador.Datos.Edad}");
-      Console.WriteLine($"Fecha de nacimiento: {jugador.Datos.Fechanac}");
+      string fecha = jugador.Datos.Fechanac.ToString("dd MMMM yyyy");
+      Console.WriteLine($"Fecha de nacimiento: {fecha}");
       jugador.MostrarCaracteristicas();
 
       return jugador;
@@ -42,7 +43,6 @@ namespace Funciones
 
 
       Console.WriteLine(@"
-
               .+++*****%-                                                                           
               #:.:::--#@@=                                                                          
              %*        .=%#:                                                                        
@@ -93,14 +93,22 @@ namespace Funciones
             ║                                                                ║
             ║ Prepara tus armas, afina tus sentidos y lánzate a la aventura. ║
             ║ El destino de la humanidad está en tus manos.                  ║
-            ║                                                                ║
             ╠════════════════════════════════════════════════════════════════╣
             ║                Presiona enter para continuar...                ║
             ╚════════════════════════════════════════════════════════════════╝ ";
       foreach (var item in texto)
       {
-        Console.Write(item);
-        Thread.Sleep(1);
+        if (item == ' ')
+        {
+          Console.Write(item);
+        }
+        else
+        {
+          Console.Write(item);
+          Thread.Sleep(1);
+        }
+
+
       }
       LimpiarBuffer();
       Console.ReadKey();
