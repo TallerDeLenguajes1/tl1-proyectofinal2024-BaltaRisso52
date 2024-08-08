@@ -79,4 +79,4 @@ En un universo donde las mazmorras han emergido repentinamente, solo los cazador
 
 # API utilizada
 
-    Para dar un toque de fantasía a los nombres de las mazmorras, el juego utiliza una API pública de Star Wars que provee nombres únicos de planetas. La API se consulta utilizando la siguiente URL: [https://swapi.dev/api/planets/{numero}/?format=json](https://swapi.dev/api/planets/{1}/?format=json). Aquí, {numero} es un valor que varía para obtener diferentes nombres, con un máximo de 60 nombres disponibles. En caso de que la API no funcione correctamente, se generarán nombres genéricos para las mazmorras.
+    Para dar un toque de fantasía a los nombres de las mazmorras, el juego utiliza una API pública de Star Wars que provee nombres únicos de planetas. La API se consulta utilizando la siguiente URL: [API](https://swapi.dev/api/planets/1/?format=json). (https://swapi.dev/api/planets/{numero}/?format=json) Aquí, {numero} es un valor que varía para obtener diferentes nombres, con un máximo de 60 nombres disponibles. En caso de que la API no funcione correctamente, se generarán nombres genéricos para las mazmorras.
